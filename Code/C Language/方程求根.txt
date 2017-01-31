@@ -1,0 +1,26 @@
+#include<stdio.h>
+#include<math.h>
+#include"stdlib.h"
+int main()
+{
+double i=0,a,b,c,x1,x2,x,delta;
+while(i<=3)
+{
+++i;
+printf("请输入方程的参数a,b,c并按回车键求根：\n");
+scanf("%lf,%lf,%lf",&a,&b,&c);
+delta=sqrt(b*b-4*a*c);
+x1=(-b+delta)/2*a;
+x2=(-b-delta)/2*a;
+system("cls");
+printf("%.0lfx^2+%.0lfx+%.0lf=0\n",a,b,c);
+if(delta<0)
+  printf("该方程无解。\n");
+else
+  if(delta==0)
+	  printf("该方程有且只有一个解，即x1=x2=%.1lf\n",x1);
+  else
+	  printf("该方程有两个解，分别为x1=%lf,x2=%lf\n",x1,x2);
+}
+return 0;
+}

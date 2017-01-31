@@ -1,0 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CsharpExercise
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            float radii = 0, area = 0, perimeter = 0;
+            Console.WriteLine("请输入圆的半径:");
+            radii = (float)Convert.ToDouble(Console.ReadLine());
+            area = 2 * (float)Math.PI * radii;
+            perimeter = (float)Math.PI * radii * radii;
+            Console.WriteLine("半径为{0}的圆的周长area = {1},面积perimeter = {2}", radii, area, perimeter);
+            Console.ReadKey();
+        }
+    }
+}

@@ -1,0 +1,38 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+
+int main(int argc, char*argv[])
+{
+	int lines = 0;
+	fscanf(stdin, "%d", &lines);
+	for (int i = 1, modulo = 2*lines;i <= 2*lines*lines;++i)
+	{
+		fputc((i%modulo) ? ((abs(i%modulo - lines) <= i / modulo) ? '*' : ' ') : ('\n'), stdout);
+	}
+	system("pause");
+	return 0;
+}
+
+/*
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+
+int main(int argc, char*argv[])
+{
+	int lines = 0;
+	fprintf(stdout, "Please input trivial lines:");
+	fscanf(stdin, "%d", &lines);
+	for (int i = 1, modulo = 2 * lines;i <= 2 * lines*lines;++i)
+	{
+		fputc((i%modulo) ? ((abs(i%modulo - lines) <= i / modulo) ? ('A' + i / modulo - abs(i%modulo - lines)) : (' ')) : ('\n'), stdout);
+	}
+	system("pause");
+	return 0;
+}
+*/

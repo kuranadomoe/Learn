@@ -1,0 +1,20 @@
+#include<stdio.h>
+int main()
+{
+	int m,i,yin=0;
+	for(m=1;m<=100000;++m)
+	{
+		for(i=2,yin=0;i<m;i+=2)//yin如果不初始化会输出错误结果,目前已发现的完数都是偶数，所以可以只对偶数判断
+			if(m%i==0)
+				yin=yin+i;
+		if(yin==m)
+		{
+			printf("完数%d的因子有：1",m);
+			for(i=2;i<m;++i)
+				if(m%i==0)
+					printf(",%d",i);
+			printf("\n");
+		}
+	}
+	return 0;
+}

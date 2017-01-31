@@ -1,0 +1,28 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+long i,a,b,c,d,e,f;
+for(;;)
+{
+system("cls");
+printf("输入两个数，求它们的最大公约数和最小公倍数：\n");
+scanf("%d,%d",&a,&b);
+for(i=1;i<=a||i<=b;++i)
+  {
+	if(a%i==0&&b%i==0)
+		c=i;
+	else  continue;
+
+  }
+for(i=1;i<=a*b;++i)
+  {
+	e=a/c;
+	f=b/c;
+	d=e*f*c;
+  }
+printf("%ld和%ld的最大公约数为%ld,最小公倍数为%ld。\n",a,b,c,d);
+system("pause");
+}
+return 0;
+}

@@ -1,0 +1,110 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Collections;//List类所在的命名空间
+namespace CcharpExercise
+{
+    static class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("请输入一个至少三位且各个位数不能全部相同的正整数(正确示例:456,错误示例:444):");
+            int number = 0;
+            while (!int.TryParse(Console.ReadLine(), out number) || check(number) || number < 100)
+            {
+                Console.WriteLine("输入错误!请重新输入.");
+                Pause();
+                Console.Clear();
+            }
+            List<int> num = new List<int>() { number };
+            for (int count = 1, max = 0, min = 0, current = 0; !num.Find(); ++count)
+            {
+                max = num.AscentSort();
+                min = num.DeclineSort();
+                current = max - min;
+                num.Add(current);
+                Console.WriteLine("第{0}步:\t{1} - {2} = {3}", count, max, min, current);
+            }
+            Console.WriteLine("出现重复数,陷入黑洞循环~~");
+            Pause();
+        }
+
+        public static bool check(int item)//检查方法,当输入数字所有位都相同时返回true,否则返回false
+        {
+            StringBuilder str = new StringBuilder(item.ToString());
+            for(int i = 1;i<str.Length;++i)
+            {
+                if (str[i] != str[i - 1])
+                    return false;
+            }
+            return true;
+        }
+        public static bool Find(this List<int> obj)//查找方法,在数组中找到和最后一个数重复的则返回true,否则返回false
+        {
+            int index = 0;
+            for (index = 0; index < obj.Count - 1; ++index)
+            {
+                if (obj[index] == obj.Last())
+                    return true;
+            }
+            return false;
+        }
+        public static int AscentSort(this List<int> num)//升序
+        {
+            StringBuilder str = new StringBuilder(num.Last().ToString());
+            while (str.Length != num[0].ToString().Length)
+            {
+                str.Append("0");
+            }
+            for (int i = 0; i < str.Length - 1; ++i)
+            {
+                char temp = '\0';
+                int count = i;
+                for (int j = i + 1; j < str.Length; ++j)
+                {
+                    if (str[count] < str[j])
+                    {
+                        count = j;
+                    }
+                }
+                if (count != i)
+                {
+                    temp = str[i];
+                    str[i] = str[count];
+                    str[count] = temp;
+                }
+            }
+            return Convert.ToInt32(str.ToString());
+        }
+        public static int DeclineSort(this List<int> num)//降序
+        {
+            StringBuilder str = new StringBuilder(num.Last().ToString());
+            for (int i = 0; i < str.Length - 1; ++i)
+            {
+                char temp = '\0';
+                int count = i;
+                for (int j = i + 1; j < str.Length; ++j)
+                {
+                    if (str[count] > str[j])
+                    {
+                        count = j;
+                    }
+                }
+                if (count != i)
+                {
+                    temp = str[i];
+                    str[i] = str[count];
+                    str[count] = temp;
+                }
+            }
+            return Convert.ToInt32(str.ToString());
+        }
+        public static void Pause()
+        {
+            Console.WriteLine("请按任意键继续. . .");
+            Console.ReadKey(true);
+        }
+    }
+}

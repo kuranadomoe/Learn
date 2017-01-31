@@ -1,0 +1,29 @@
+/*
+题目,36人吃饭,男人50元一人,女人40元,小号20元,总共花了1600,男人女人小孩分别多少人?*/
+/*
+解答:设极端情况,只有一种人,可得男人3个或女人40个或小孩80个,不符合人数36的题蛇,假设不成立
+再设极端情况,只有两种人,立二元一次方程组,分别得到解1为男人16和女人20,解2所得值趋0取整为男人28小孩6,解3所得值不在定义域[0,36]内,舍去;
+取最大值则男人最多28个,女人最多20个,小孩最多6个
+*/
+
+#include <stdio.h>
+#include <Windows.h>
+
+
+int main(void)
+{
+	int man = 0, woman = 0, child = 0;
+	for (woman = 1; woman <= 20; ++woman)
+	{
+		for (child = 1;child <= 6; ++child)
+		{
+			man = 36 - woman - child;
+			if (man + woman + child == 36 && 50 * man + 40 * woman + 20 * child == 1600)
+			{
+				printf("man = %d,woman = %d,child = %d\n",man,woman,child);
+			}
+		}
+	}
+	system("pause");
+	return 0;
+}

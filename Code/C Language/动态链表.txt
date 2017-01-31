@@ -1,0 +1,216 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+//定义结构体作为链表的结点
+struct Ocean
+{
+	char name[7];
+	char sex[3];
+	int age;
+	struct Ocean *next;
+};
+
+//主函数
+int main(void)
+{
+	//函数声明，creat是建立链表，返回值为链表表头,output是输出数据,dump是释放内存
+	struct Ocean *creat(void);
+	void output(struct Ocean *head);
+	void dump(struct Ocean *head);
+
+
+	//定义链表表头指针
+	struct Ocean *head;
+
+	//函数调用
+	head=creat();
+	output(head);
+	dump(head);
+	return 0;
+}
+
+//自定义函数，建立链表
+struct Ocean *creat(void)
+{
+	//定义结构体指针变量，head是表头，node指向结点，current开辟新的结点
+	struct Ocean *head=NULL;
+	struct Ocean *node=NULL,*current=NULL;
+	do
+	{
+		current=(struct Ocean*)malloc(sizeof(struct Ocean));
+		scanf("%s%s%d",current->name,current->sex,&current->age);
+		if(head==NULL)
+			head=current;
+		else
+			node->next=current;
+		node=current;
+	}while(current->age!=0);
+	node->next=NULL;
+	return head;
+}
+
+//自定义函数，释放链表所占内存
+void dump(struct Ocean *head)
+{
+	struct Ocean *node=NULL,*current=NULL;
+	node=head;
+	while(node!=NULL)
+	{	
+		current=node->next;
+		free(node);
+		node=current;
+	}
+}
+
+//自定义函数，输出链表内的数据
+void output(struct Ocean *head)
+{
+	struct Ocean *node=NULL;
+	node=head;
+	while(node!=NULL)
+	{
+		printf("%s\n%s\n%d\n",node->name,node->sex,node->age);
+		node=node->next;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct Number
+{
+	int num;
+	struct Number *next;
+}Num;
+
+static int Len=1;
+
+Num *creat(void);
+Num *sort(Num *head,int n);
+void output(Num *head);
+void dump(Num *head);
+
+int main(void)
+{
+	Num *head;
+	int n;
+	do
+	{
+		system("cls");
+		printf("请输入数据，当输入0时结束读取:\n");
+		head=creat();
+		printf("请输入要将最后多少位数移至前面:");
+		scanf("%d",&n);
+		if(n>=Len)
+			printf("错误！移动位数不能超过数据本身的数量。\n");
+		else
+		{
+			head=sort(head,n);
+			printf("排序后的数据:\n");
+			output(head);
+		}
+		dump(head);
+		printf("继续请按0，否则按其他键。\n");
+	}while(getch()=='0');
+	return 0;
+}
+
+Num *creat(void)
+{
+	Num *head=NULL,*node=NULL,*current=NULL;
+	do
+	{
+		current=(Num*)malloc(sizeof(Num));
+		scanf("%d",&current->num);
+		if(head==NULL)
+		{
+			head=current;
+			node=head;
+		}
+		else
+			if(current->num==0)
+			{
+				free(current);
+				node->next=NULL;
+				break;
+			}
+			else
+			{
+				node->next=current;
+				node=current;
+				Len++;
+			}
+	}while(current->num!=0);
+	node->next=NULL;
+	return head;
+}
+
+Num *sort(Num *head,int n)
+{
+	Num *node=head,*current=node->next;
+	int i=0;
+	while(1)
+	{
+		i++;
+		if(i==Len)
+		{
+			node->next=head;
+			break;
+		}
+		node=current;
+		current=node->next;
+	}
+	i=0,node=head,current=node->next;
+	while(1)
+	{
+		i++;
+		if(i==Len-n)
+		{
+			head=current;
+			node->next=NULL;
+			break;
+		}
+		node=current;
+		current=node->next;
+	}
+	return head;
+}
+
+void output(Num *head)
+{
+	Num *node=head;
+	while(node!=NULL)
+	{
+		printf("%-3d",node->num);
+		node=node->next;
+	}
+	printf("\n");
+}
+
+void dump(Num *head)
+{
+	Num *node=head,*current=NULL;
+	while(node!=NULL)
+	{
+		current=node->next;
+		free(node);
+		node=current;
+	}
+}

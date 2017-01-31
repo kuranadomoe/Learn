@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main(int argc, char*argv[])
+{
+	for (int i = 11;i <= 99;i = (i % 10 == i / 10) ? (i / 10 + 1) * 10 + 1 : i + 1)
+	{
+		fprintf(stdout, "%d * %d = %2d%s", i % 10, i / 10, (i % 10) * (i / 10), i % 10 < i / 10 ? "   " : "\n");
+	}
+	system("pause");
+	return 0;
+}

@@ -1,0 +1,70 @@
+//Author:	StarCluster
+//Date:		2016-10-29
+//Link:		https://www.zhihu.com/question/52057019/answer/128937707
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main(int argc, char*argv[])
+{
+	int arr[9] = { 1,1,1,1,1,1,1,1,1 };
+	int sum = 0, product = 1;
+	for (;arr[0] <= 9;)
+	{
+		++arr[8];
+		sum = 0, product = 1;
+		for (int i = 8;i >= 0;--i)
+		{
+			if (arr[i] > 9 && i > 0)
+			{
+				++arr[i - 1];
+				for (int j = i;j < 9;++j)
+					arr[j] = arr[i - 1];
+			}
+			sum += arr[i];
+			product *= arr[i];
+		}
+		if (sum == 45 && product == 362880)
+		{
+			for (int i = 0;i < 9;++i)
+				fprintf(stdout, "%2d", arr[i]);
+			fputc('\n', stdout);
+		}
+	}
+	system("pause");
+	return 0;
+}
+/*
+
+//作者：Milo Yip
+//链接：https://www.zhihu.com/question/52057019/answer/128773391
+//来源：知乎
+//著作权归作者所有，转载请联系作者获得授权。
+//输出:
+//1 2 3 4 5 6 7 8 9
+//1 2 4 4 4 5 7 9 9
+
+#include <stdio.h>
+
+void f(int* a, int sum, int product, int n)
+{
+    if (n == 9) 
+	{
+        if (sum == 45 && product == 362880)
+		{
+            for (int i = 0; i < 9; i++)
+                printf("%d ", a[i]);
+            printf("\n");
+        }
+    }
+    else
+        for (a[n] = (n == 0) ? 1 : a[n - 1]; a[n] <= 9; a[n]++)
+            f(a, sum + a[n], product * a[n], n + 1);
+}
+
+int main()
+{
+    int a[9];
+    f(a, 0, 1, 0);
+} 
+*/

@@ -1,0 +1,24 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+int i,x,t;
+float m,n,an,s;
+for(;;)
+  {
+	printf("请输入要计算的前n项和：\n");
+	scanf("%d",&x);
+	for(i=0,m=2,n=1,s=0;i<x;++i)
+	{
+		an=m/n;
+		s=s+an;
+		t=m;
+		m=m+n;
+		n=t;
+    }
+    printf("数列的前%d项和约为%.2f(精确到小数点后两位)。\n",x,s);
+    system("pause");
+    system("cls");
+  }
+return 0;
+}

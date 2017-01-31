@@ -1,0 +1,360 @@
+//main.c
+#pragma warning(disable:4996)
+#include <stdio.h>
+#include <conio.h>
+#include <windows.h>
+#include "state.h"
+
+int main(void)
+{
+	ElemType data = 0, max = 0, min = 0;//data输入数据
+	int choice = 0, number = 0;//choice选择,number编号
+	Headnode *head = NULL;
+	for (; choice != 9;)
+	{
+		switch (carte())
+		{
+		case 1:
+			if (head != NULL)
+			{
+				destroy(head);
+				free(head);
+				head = NULL;
+			}
+			head = create(); 
+			printf("\t     Success!\n");
+			printf("\t     The output linklist:");
+			output(head);
+			printf("\t     Press any key to continue.");
+			getch();
+			break;
+		case 2:
+			printf("\t     The length is : %d",head->length);
+			getch();
+			break;
+		case 3:
+			printf("\t     Please search element input:");
+			scanf("%d",&data);
+			number = locate(head, data);
+			if (number != 0)
+				printf("\t     The element number is %d.",number);
+			else
+				printf("\t     Without this element!");
+			getch();
+			break;
+		case 4:
+			printf("\t     Please insert the number of input elements:");
+			scanf("%d",&number);
+			printf("\t     Please enter the inserted element:");
+			scanf("%d",&data);
+			if (insert(head, number, data) == OK)
+				printf("\t     Successful insertion!\n");
+			else
+				printf("\t     Failed to insert!\n");
+			printf("\t     After insertion of the linked list:");
+			output(head);
+			printf("\t     Press any key to continue.");
+			getch();
+			break;
+		case 5:
+			printf("\t     Please enter the serial number of elements to be deleted:");
+			scanf("%d",&number);
+			if (deletenode(head, number) == OK)
+				printf("\t     Successful delete!\n");
+			else
+				printf("\t     Failed to delete!\n");
+			printf("\t     The output linklist:");
+			output(head);
+			printf("\t     Press any key to continue.");
+			getch();
+			break;
+		case 6:
+			printf("\t     Reverse before:");
+			output(head);
+			if (reverse(head) == OK)
+			{
+				printf("\t     After the reverse:");
+				output(head);
+			}
+			else
+				printf("\t     Reverse failure!\n");
+			printf("\t     Press any key to continue.");
+			getch();
+			break;
+		case 7:
+			if (maxANDmin(head, &max, &min) == OK)
+				printf("\t     The max element is %d,the min element is %d.", max, min);
+			else
+				printf("\t     Go awry!");
+			getch();
+			break;
+		case 8:
+			if (destroy(head) == OK)
+			{
+				printf("\t     Successful destroy!");
+				head = NULL;
+			}
+			else
+				printf("\t     Failed to destroy!");
+			getch();
+			break;
+		case 9:
+			choice = 9;
+			break;
+		default:
+			printf("\t     Unknown error!");
+			getch(); exit(1);
+			break;
+		}
+		fflush(stdin);
+	}
+	if (head != NULL&&choice != 8)
+	{
+		destroy(head);
+	}
+	free(head);
+	printf("\n\t\t\t\tGood bay!");
+	Sleep(2500);
+	return 0;
+}
+
+
+
+
+//state.h
+#define OK 1
+#define ERROR 0
+
+typedef int Status;//状态
+typedef int ElemType;//类型
+typedef struct Linklist
+{
+	ElemType data;//数据
+	struct Linklist *next;//后继
+}Linklist;//链表结点
+typedef struct
+{
+	int length;//链表长度
+	Linklist *next;//后驱
+}Headnode;//头结点
+
+extern int carte(void); //菜单函数, 在屏幕上打印菜单并返回用户的选择
+extern void output(Headnode *const head);//输出函数,输出链表的数据
+extern Headnode *create(void);//创建函数,创建一个链表并返回头指针
+extern int locate(Headnode *const head, ElemType const data);//查找函数,查找特定值并返回其序号,失败则返回0
+extern Status deletenode(Headnode *const head, int const number);//删除函数,删除指定元素并返回删除状态
+extern Status insert(Headnode *const head, int const number, ElemType const data);//插入函数,插入元素到指定位置并返回插入状态
+extern Status reverse(Headnode *const head);//逆置函数,采用就地逆置法逆置链表并返回状态值
+extern Status maxANDmin(Headnode *const head, ElemType *const max, ElemType *const min);//求最值函数,找出链表中的最大值和最小值并返回寻找状态
+extern Status destroy(Headnode *const head);//销毁函数,销毁链表并返回操作状态
+
+
+
+
+//realize.c
+#pragma warning(disable:4996)
+#include <Windows.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "state.h"
+
+
+/*
+功能:	 菜单函数,在屏幕上打印菜单
+参数:	 无
+返回值:  返回用户的选择
+*/
+extern int carte(void)
+{
+	int choice = 0;
+	system("cls");
+	printf(
+		"\n\t                  Made in Star cluster\n"
+		"\t_____________________________________________________________\n"
+		"\t|    1.create a linklist       2.request the length         |\n"
+		"\t|    3.locate an element       4.Insert an element          |\n"
+		"\t|    5.deleta an element       6.reverse the linklist       |\n"
+		"\t|    7.request the max-min     8.destroy the linklist       |\n"
+		"\t|    9.quit the program!                                    |\n"
+		"\t-------------------------------------------------------------\n"
+		"\t     Please dial your password and press pound:"
+		);
+	while (scanf("%d", &choice), 1 > choice || 9 < choice)
+	{
+		printf("\t     The input error, please input again:");
+		fflush(stdin);
+	}
+	return choice;
+}
+
+
+/*
+功能:	输出链表
+参数:	头指针
+返回值:	无
+*/
+extern void output(Headnode *const head)
+{
+	Linklist *node = head->next;
+	if (head->length == 0)
+	{
+		printf("\n\t     The list is empty!\n");
+		return;
+	}
+	for (; node != NULL;)
+	{
+		printf("%-5d",node->data);
+		node = node->next;
+	}
+	putchar(10);
+}
+
+
+/*
+功能:	创建一个带头结点的链表
+参数:	无
+返回值: 链表的头指针
+*/
+extern Headnode *create(void)
+{
+	Headnode *head = NULL;
+	Linklist *node = NULL, *current = NULL;
+	ElemType data = 0, length = 0;
+	printf("\t     Please input the data,in order to '0' ended:");
+	for (scanf("%d", &data); data != 0; scanf("%d", &data))
+	{
+		current = (Linklist *)malloc(sizeof(Linklist));
+		current->data = data;
+		current->next = node;
+		node = current;
+		++length;
+	}
+	head = (Headnode *)malloc(sizeof(Headnode));
+	head->length = length;
+	head->next = node;
+	return head;
+}
+
+
+/*
+功能:	在链表中查找特定值
+参数:	头指针和查找对象
+返回值: 查找成功则返回查找对象的序号,失败则返回0
+*/
+extern int locate(Headnode *const head,ElemType const data)
+{
+	Linklist *node = NULL;
+	int number = 0, mark = 0;
+	for (node = head->next; node != NULL; node = node->next)
+	{
+		++mark;
+		if (node->data == data)
+		{
+			number = mark;
+			break;
+		}
+	}
+	return number;
+}
+
+
+/*
+功能:	插入一个元素到指定位置
+参数:	头指针,插入位置,要插入的数据
+返回值: 插入状态(ERROR或OK)
+*/
+extern Status insert(Headnode *const head, int const number, ElemType const data)
+{
+	Linklist *node = head, *current = head->next;
+	if (number<1 || number>head->length)
+		return ERROR;
+	for (int i = 1; i < number; ++i)
+		node = node->next, current = current->next;
+	node->next = (Linklist *)malloc(sizeof(Linklist));
+	node->next->next = current;
+	node->next->data = data;
+	++head->length;
+	return OK;
+}
+
+
+/*
+功能:	删除指定元素
+参数:	头指针,待删除元素的序号
+返回值:	状态(ERROR或OK)
+*/
+extern Status deletenode(Headnode *const head, int const number)
+{
+	Linklist *node = head, *current = head->next;
+	if (number<1 || number>head->length)
+		return ERROR;
+	for (int i = 1; i < number; ++i)
+		node = node->next, current = current->next;
+	node->next = current->next;
+	free(current);
+	--head->length;
+	return OK;
+}
+
+
+/*
+功能:	就地逆置单链表
+参数:	头指针
+返回值:	状态值(OK或ERROR)
+*/
+extern Status reverse(Headnode *const head)
+{
+	Linklist *node = NULL, *current = head->next;
+	if (head->next == NULL)
+		return ERROR;
+	for (; current != NULL;)
+	{
+		head->next = current;
+		current = current->next;
+		head->next->next = node;
+		node = head->next;
+	}
+	return OK;
+}
+
+
+/*
+功能:	求链表元素的最大值和最小值
+参数:	头指针,最大值max的指针,最小值min的指针
+返回值:	状态(OK或ERROR)
+*/
+extern Status maxANDmin(Headnode *const head, ElemType *const max, ElemType *const min)
+{
+	Linklist *node = head->next;
+	if (head->length < 1)
+		return ERROR;
+	for (*max = head->next->data, *min = head->next->data; node != NULL; node = node->next)
+	{
+		if (node->data > *max)
+			*max = node->data;
+		if (node->data < *min)
+			*min = node->data;
+	}
+	return OK;
+}
+
+
+/*
+功能:	销毁函数,回收链表占用的内存
+参数:	链表头指针
+返回值: 操作状态(OK或ERROR)
+*/
+extern Status destroy(Headnode *const head)
+{
+	Linklist *node = head->next, *current = NULL;
+	if (head->next == NULL)
+		return ERROR;
+	for (; node != NULL;)
+	{
+		current = node->next;
+		free(node);
+		node = current;
+	}
+	head->next = NULL;
+	return OK;
+}

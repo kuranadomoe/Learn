@@ -1,0 +1,57 @@
+#include<stdio.h>
+int main()
+{
+long i=0,a,b,c;
+while(i<3)
+{
+printf("^-^请输入3个数字：\n");
+scanf("%ld,%ld,%ld",&a,&b,&c);++i;
+  if(a>b&&b>c)
+    printf("%ld>%ld>%ld\n",a,b,c);
+  else if(a>c&&c>b)
+	  printf("%ld>%ld>%ld\n",a,c,b);
+  else if(b>a&&a>c)
+	  printf("%ld>%ld>%ld\n",b,a,c);
+  else if(b>c&&c>a)
+	  printf("%ld>%ld>%ld\n",b,c,a);
+  else if(c>a&&a>b)
+	  printf("%ld>%ld>%ld\n",c,a,b);
+  else if(c>b&&b>a)
+	  printf("%ld>%ld>%ld\n",c,b,a);
+  else if(a==b&&b==c)
+	  printf("%ld=%ld=%ld\n",a,b,c);
+  else if(a>b&&b==c)
+	  printf("%ld>%ld=%ld\n",a,b,c);
+  else if(b==c&&c>a)
+	  printf("%ld=%ld>%ld\n",b,c,a);
+  else if(a==b&&b>c)
+	  printf("%ld=%ld>%ld\n",a,b,c);
+  else if(c>a&&a==b)
+	  printf("%ld>%ld=%ld\n",c,a,b);
+  else if(a==c&&c>b)
+	  printf("%ld=%ld>%ld\n",a,c,b);
+  else if(b>a&&a==c)
+	  printf("%ld>%ld=%ld\n",b,a,c);
+}
+return 0;
+}
+
+
+方法二
+#include<stdio.h>
+int main()
+{
+int max(int x,int y);
+int a,b,c;
+sanf("%d,%d",&a,&b);
+c=max(a,b);
+printf("max=%d\n",c);
+return 0;
+}
+int max(int x,int y)
+{
+int z;
+if(x>y)z=x;
+else z=y;
+return (z);
+}

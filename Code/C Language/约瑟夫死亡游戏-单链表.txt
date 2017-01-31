@@ -1,0 +1,317 @@
+单链表1:
+/******************************************************************************************************
+Name        : Josephus.c
+Author      : star_cluster
+Description : 约瑟夫环（约瑟夫问题）是一个数学的应用问题,
+			  已知n个人（以编号1，2，3...n分别表示）围坐在一张圆桌周围,从编号为k的人开始报数,
+			  数到m的那个人出列；他的下一个人又从1开始报数，数到m的那个人又出列,
+			  依此规律重复下去,直到圆桌周围的人全部出列.
+			  在此处只实现从1号开始报数,直到剩余指定人数则停止.
+*******************************************************************************************************/
+#pragma warning(disable:4996)
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#include <Windows.h>
+
+
+typedef struct DATA
+{
+	int number;
+	struct DATA *next;
+}DATA;
+
+
+DATA *establish(int n);//创建链表
+void initialization(DATA *const head);//初始化
+void dump(DATA *const head);//销毁链表
+void delete(DATA *const head, DATA *const discard);//删除链表结点
+
+int main(void)
+{
+	DATA *head = NULL, *node = NULL;// 头指针head, 当前结点node
+	int n = 0, survive = 0, die = 0;//n是参与约瑟夫游戏的总人数,survive是幸存人数,die是死亡编号(第die位的人死亡)
+	int surplus = 0, num = 0;//surplus记录剩余人数,num为当前报数
+	printf("约瑟夫死亡游戏\n\n");
+	printf("请输入参与游戏的人数:");
+	while (scanf("%d", &n), n <= 0)
+	{
+		printf("输入错误!请重新输入:");
+		getchar();
+	}
+	head = establish(n);
+	initialization(head);
+	printf("请输入幸存人数和死亡编号(空格隔开):");
+	while (scanf("%d %d", &survive, &die), survive <= 0 || die <= 0 || survive > n)
+	{
+		printf("输入错误!请重新输入:");
+		getchar();
+	}
+	for (surplus = n, num = 1, node = head; surplus != survive;)
+	{
+		if (num == die)
+		{
+			if (head == node)//删除结点代表死亡
+			{
+				head = head->next;
+				free(node);
+				node = head;
+			}
+			else
+			{
+				if (node->next == NULL)
+				{
+					delete(head, node);
+					node = head;
+				}
+				else
+					delete(head, node);
+			}
+			--surplus;//修正幸存者数量
+			num = 1;//重新报数
+		}
+		else
+		{
+			node = node->next;
+			++num;
+		}
+		if (node == NULL)
+		{
+			node = head;
+		}
+	}
+	printf("幸存者编号为:\n");
+	for (node = head; node != NULL; node = node->next)
+	{
+		printf("%d号  ",node->number);
+	}
+	putchar(10);
+
+	dump(head);
+	system("pause");
+	return 0;
+}
+
+DATA *establish(int n)//创建链表
+{
+	int i = 0;//循环变量
+	DATA *head = NULL, *node = NULL, *current = NULL;//创建链表的三个指针,头指针head,结点node,新结点current
+
+	for (i = 0; i < n; i++)
+	{
+		current = (DATA *)malloc(sizeof(DATA));
+		if (head == NULL)
+		{
+			head = current;
+		}
+		else
+		{
+			node->next=current;
+		}
+		node = current;
+	}
+	node->next = NULL;
+
+	return head;
+}
+
+
+void initialization(DATA *const head)//初始化
+{
+	DATA *node = NULL;//链表指针,头指针head(由形参定义),结点node
+	int number = 0;//编号
+	for (node = head, number = 1; node != NULL; node = node->next, ++number)
+	{
+		node->number = number;
+	}
+}
+
+
+void delete(DATA *const head, DATA *const discard)//删除链表结点
+{
+	DATA *target = head, *temp = NULL;//target是要free的目标
+	if (discard->next != NULL)
+	{
+		target = discard->next;
+		*discard = *discard->next;
+	}
+	else
+	{
+		while (target->next->next != discard)//找到倒数第三个结点
+			target = target->next;
+		temp = target->next;//令temp指向倒数第二个结点
+		*discard = *temp;//将倒数第二个结点的内容复制到尾结点
+		discard->next = NULL;//尾结点指针为空
+		target->next = discard;//让倒数第三个结点链接尾结点
+		target = temp;//让target指向倒数第二个结点以便free
+	}
+	free(target);
+}
+
+
+void dump(DATA *const head)//销毁链表
+{
+	DATA *node = NULL, *current = NULL;//链表指针,头指针head(由形参定义),结点node,新结点current
+
+	node = head, current = head;
+	for (; node != NULL;)
+	{
+		current = node->next;
+		free(node);
+		node = current;
+	}
+}
+
+
+
+
+
+
+
+
+单链表2:
+/******************************************************************************************************
+Name        : Josephus.c
+Author      : star_cluster
+Description : 约瑟夫环（约瑟夫问题）是一个数学的应用问题,
+			  已知n个人（以编号1，2，3...n分别表示）围坐在一张圆桌周围,从编号为k的人开始报数,
+			  数到m的那个人出列；他的下一个人又从1开始报数，数到m的那个人又出列,
+			  依此规律重复下去,直到圆桌周围的人全部出列.
+			  在此处只实现从1号开始报数,直到剩余指定人数则停止.
+*******************************************************************************************************/
+#pragma warning(disable:4996)
+#include <stdio.h>
+#include <conio.h>
+#include <Windows.h>
+
+
+typedef struct DATA
+{
+	int number;
+	struct DATA *next;
+}DATA;
+
+
+DATA *establish(int n);//创建链表
+void initialization(DATA *const head);//初始化
+void dump(DATA *const head);//销毁链表
+void delete(DATA *const head, DATA *const discard);//删除链表结点
+
+int main(void)
+{
+	DATA *head = NULL, *node = NULL, *temp = NULL;// 头指针head, 当前结点node
+	int n = 0, survive = 0, die = 0;//n是参与约瑟夫游戏的总人数,survive是幸存人数,die是死亡编号(第die位的人死亡)
+	int surplus = 0, num = 0;//surplus记录剩余人数,num为当前报数
+	printf("约瑟夫死亡游戏\n\n");
+	printf("请输入参与游戏的人数:");
+	while (scanf("%d", &n), n <= 0)
+	{
+		printf("输入错误!请重新输入:");
+		getchar();
+	}
+	head = establish(n);
+	initialization(head);
+	printf("请输入幸存人数和死亡编号(空格隔开):");
+	while (scanf("%d %d", &survive, &die), survive <= 0 || die <= 0 || survive > n)
+	{
+		printf("输入错误!请重新输入:");
+		getchar();
+	}
+	for (surplus = n, num = 1, node = head; surplus != survive;)
+	{
+		if (num == die)
+		{
+			if (head == node)//删除结点代表死亡
+			{
+				head = head->next;
+				free(node);
+				node = head;
+			}
+			else
+			{
+				temp = node->next;
+				delete(head,node);
+				node = temp;
+			}
+			--surplus;//修正幸存者数量
+			num = 1;//重新报数
+		}
+		else
+		{
+			node = node->next;
+			++num;
+		}
+		if (node == NULL)
+		{
+			node = head;
+		}
+	}
+	printf("幸存者编号为:\n");
+	for (node = head; node != NULL; node = node->next)
+	{
+		printf("%d号  ",node->number);
+	}
+	putchar(10);
+
+	dump(head);
+	system("pause");
+	return 0;
+}
+
+DATA *establish(int n)//创建链表
+{
+	int i = 0;//循环变量
+	DATA *head = NULL, *node = NULL, *current = NULL;//创建链表的三个指针,头指针head,结点node,新结点current
+
+	for (i = 0; i < n; i++)
+	{
+		current = (DATA *)malloc(sizeof(DATA));
+		if (head == NULL)
+		{
+			head = current;
+		}
+		else
+		{
+			node->next=current;
+		}
+		node = current;
+	}
+	node->next = NULL;
+
+	return head;
+}
+
+
+void initialization(DATA *const head)//初始化
+{
+	DATA *node = NULL;//链表指针,头指针head(由形参定义),结点node
+	int number = 0;//编号
+	for (node = head, number = 1; node != NULL; node = node->next, ++number)
+	{
+		node->number = number;
+	}
+}
+
+
+void delete(DATA *const head, DATA *const discard)//删除链表结点
+{
+	DATA *node = head;
+	while (node->next != discard)
+		node = node->next;
+	node->next = discard->next;
+	free(discard);
+}
+
+
+void dump(DATA *const head)//销毁链表
+{
+	DATA *node = NULL, *current = NULL;//链表指针,头指针head(由形参定义),结点node,新结点current
+
+	node = head, current = head;
+	for (; node != NULL;)
+	{
+		current = node->next;
+		free(node);
+		node = current;
+	}
+}

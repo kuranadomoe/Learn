@@ -1,0 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp
+{
+    class Program
+    {
+        struct Book
+        {
+            public string name;//书名
+            public int number;//图书编号
+            public string press;//出版社
+            public float price;//单价
+        }
+        static void Main(string[] args)
+        {
+            Book test;
+            Console.WriteLine("请输入书名");
+            test.name=Console.ReadLine();
+            Console.WriteLine("请输入图书编号");
+            test.number = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("请输入图书出版社");
+            test.press = Console.ReadLine();
+            Console.WriteLine("请输入图书单价");
+            test.price = Convert.ToSingle(Console.ReadLine());
+            Console.WriteLine("\n\n图书信息:");
+            Console.WriteLine("书名\t\t{0}",test.name);
+            Console.WriteLine("编号\t\t{0}",test.number);
+            Console.WriteLine("出版社\t\t{0}",test.press);
+            Console.WriteLine("单价\t\t{0}",test.price);
+            Console.ReadKey();
+        }
+    }
+}

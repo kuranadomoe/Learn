@@ -1,0 +1,124 @@
+/*
+输入一个数字n，如果n为奇数，则输出顺时针上三角，否则逆时针输出下三角
+
+如n=5时输出：1   2   3   4  5        n=4时则输出：1
+                10  11  12  6                     2    8
+		            15  13  7                     3    9    10
+			            14  8                     4    5    6    7
+			   	            9
+*/
+#include<stdio.h>
+#include<stdlib.h>
+
+int **creat(int n);
+void even(int **digit, int n);
+void odd(int **digit, int n);
+void output(int **digit,int n);
+void dump(int **digit,int n);
+
+int main(void)
+{
+	int i,j,n;
+	int **digit=NULL;
+	do
+	{
+		system("cls");
+		printf("输入一个大于3的整数n:");
+		scanf_s("%d",&n,1);
+		digit=creat(n);
+		if (digit == 0)
+		{
+			printf("出错！");
+			exit(-1);
+		}
+		switch (n % 2)
+		{
+		case 0:
+			even(digit,n);
+			break;
+		case 1:
+			odd(digit,n);
+			break;
+		default:
+			printf("输入错误！请输入3以上的整数！\n");
+			break;
+		}
+		printf("输入1继续，输入其他数退出.\n");
+	}while (getch()=='1');
+	return 0;
+}
+
+//创建动态二维数组
+int **creat(int n)
+{
+	int i, j;
+	int **digit;
+	//创建动态二维数组
+	digit = (int **)malloc(n*sizeof(int *));
+	for (i = 0; i < n; i++)
+		digit[i] = (int *)malloc(n*sizeof(int));
+
+	//初始化
+	for (i = 0; i < n; i++)
+	{
+    	for (j = 0; j < n; j++)
+			digit[i][j] = 0;
+	}
+	return digit;
+}
+
+//偶数情况
+void even(int **digit, int n)
+{
+	int i, j, k, m;
+	for (j = 0, k = 0, m = 1; m <= (1 + n)*n / 2; j++)
+	{
+		for (i=j; i < n-j; i++, m++)
+			digit[i][j] = m;
+		for (k = j + 1, i--; k < n - j; k++, m++)
+			digit[i][k] = m;
+	}
+	output(digit, n);
+}
+
+//奇数情况
+void odd(int **digit, int n)
+{
+	int i, j, k, m;
+	for (i = 0, k = 0, m = 1; m <= (1 + n)*n / 2; i++)
+	{
+		for (j = i; j < n - i; j++, m++)
+			digit[i][j] = m;
+		for (k = i + 1, j--; k < n - i; k++, m++)
+			digit[k][j] = m;
+	}
+	output(digit, n);
+}
+
+//输出
+void output(int **digit,int n)
+{
+	int i, j;
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n; j++)
+		{
+			if (digit[i][j] == 0)
+				printf("     ");
+			else
+				printf("%-5d", digit[i][j]);
+		}
+		printf("\n");
+	}
+	dump(digit, n);
+}
+
+//释放内存
+void dump(int **digit,int n)
+{
+	int i;
+	for (i = 0; i < n; i++)
+		free(digit[i]);
+	free(digit);
+	digit = NULL;
+}

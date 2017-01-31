@@ -1,0 +1,40 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+int i,j,k,x;
+for(;;)
+{
+system("cls");
+printf("请输入菱形的边长：\n");
+scanf("%d",&x);
+printf("\n");
+for(i=1;i<=x;++i)
+  {
+	for(j=1;j<=x-i;j++)
+		printf(" ");
+	for(k=1;k<=2*i-1;k++)
+	{
+		if(k==1||k==2*i-1)
+    	    printf("*");
+		else printf(" ");
+	}
+	printf("\n");
+  }
+for(i=1;i<=x;++i)
+  {
+	for(j=1;j<=i;j++)
+		printf(" ");
+	for(k=1;k<=2*x-1-2*i;k++)
+	{
+		if(k==1||k==2*x-1-2*i)
+	    	printf("*");
+		else printf(" ");
+	}
+	printf("\n");
+  }
+printf("是否继续作图？如果是，");
+system("pause");
+}
+return 0;
+}

@@ -1,0 +1,29 @@
+using System;
+
+namespace CcharpExercise
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("请输入要打印的杨辉三角的层数:");
+            int[] arr = new int[int.Parse(Console.ReadLine())];
+            for (int i = 0; i < arr.Length; ++i)
+            {
+                Console.Write("".PadRight((arr.Length - i - 1) * 2));
+                for (int j = i; j >= 0; --j)
+                {
+                    arr[j] = (j == 0 || j == i) ? 1 : (arr[j] + arr[j - 1]);
+                    Console.Write("{0,-4:d}", arr[j]);
+                }
+                Console.WriteLine();
+            }
+            Pause();
+        }
+        public static void Pause()
+        {
+            Console.WriteLine("请按任意键继续. . .");
+            Console.ReadKey(true);
+        }
+    }
+}

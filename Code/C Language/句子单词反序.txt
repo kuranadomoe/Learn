@@ -1,0 +1,29 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(void)
+{
+	char str[100] = "", putstr[100] = "";
+	int len = 0, count = 0, i = 0, j = 0;
+	gets(str);
+	len = strlen(str);
+	for (i = len - 1, j = 0, count = 0;i >= 0;--i, ++count)
+	{
+		if (str[i] == ' ')
+		{
+			strncpy(putstr + j, str + i + 1, count);
+			putstr[j += count] = ' ';
+			++j;count = -1;
+		}
+		if (i == 0)
+		{
+			strncpy(putstr + j, str, count + 1);
+			putstr[j += count + 1] = '\0';
+		}
+	}
+	puts(putstr);
+	system("pause");
+	return 0;
+}

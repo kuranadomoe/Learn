@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace CcharpExercise
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int mouth = 0;
+            for (Console.WriteLine("请输入月份:"); (mouth = Convert.ToInt32(Console.ReadLine())) < 1; Console.Clear())
+            {
+                Console.WriteLine("请输入一个正整数!");
+                Console.Write("请按任意键继续...");
+                Console.ReadKey();
+            }
+            int[] fibonacci = new int[mouth];
+            for (int i = 0; i < fibonacci.Length; ++i)
+            {
+                if (i <= 1)
+                {
+                    fibonacci[i] = 1;
+                }
+                else
+                {
+                    fibonacci[i] = fibonacci[i - 1] + fibonacci[i - 2];
+                }
+            }
+            mouth = 0;
+            foreach(int number in fibonacci)
+            {
+                Console.WriteLine("第{0}个月的兔子数量为:\t{1}", ++mouth, number);
+            }
+            Console.Write("请按任意键继续...");
+            Console.ReadKey();
+        }
+    }
+}

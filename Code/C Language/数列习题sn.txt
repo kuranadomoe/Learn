@@ -1,0 +1,23 @@
+sn=a+aa+aaa+……
+
+
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+long i,an,sn,t,n;
+for(;;)
+{
+system("cls");
+printf("输入数列的首项和项数：\n");
+scanf("%ld,%ld",&an,&n);
+for(i=1,sn=0,t=an;i<=n;++i)
+  {
+	sn=sn+an;
+	an=10*an+t;
+  }
+printf("%ld\n",sn);
+system("pause");
+}
+return 0;
+}

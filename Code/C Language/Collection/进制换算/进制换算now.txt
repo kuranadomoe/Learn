@@ -1,0 +1,129 @@
+#pragma warning(disable:4996)//关掉对于_s函数的检查
+#include <stdio.h>
+#include <windows.h>
+
+
+int choose(void);//选择函数
+int get(int **numbers);//输入函数
+int *decimalTObinary(int *numbers,int *len);//十进制转二进制
+int *binaryTOdecimal(int *numbers, int *len);//二进制转十进制
+void put(int *numbers,int len);//输出结果
+
+
+int main(void)
+{
+	for (int choice = 0; choice == 0; choice = getchar() - '0')
+	{
+		int *numbers = NULL, len = 0;
+		system("cls");
+		switch (choose())
+		{
+		case 1:
+			len = get(&numbers);
+			numbers = decimalTObinary(numbers, &len);
+			break;
+		case 2:
+			len = get(&numbers);
+			numbers = binaryTOdecimal(numbers, &len);
+			break;
+		case 3:
+			printf("\t\t\t        欢迎下次使用!\n");
+			Sleep(1500);
+			exit(0);
+			break;
+		default:
+			printf("异常情况!\n");
+		}
+		put(numbers, len);
+		printf("继续请按0,退出请按任意键.\n");
+		fflush(stdin);
+	}
+	system("pause");
+	return 0;
+}
+
+int choose(void)//选择函数,获取用户的选择
+{
+	int select = 0, len = 0;//选择和数字长度
+	system("cls");
+	printf("\n\t\t\t\t进制换算器\n\n");
+	printf("\t\t\t     1.十进制转二进制\n");
+	printf("\t\t\t     2.二进制转十进制\n");
+	printf("\t\t\t     3.退出\n");
+	printf("\n\t\t\t      请输入你的选择:");
+	while (scanf("%d", &select), !(1 <= select&& select <= 3))
+	{
+		printf("\t\t\t     输入错误!重新输入:");
+		fflush(stdin);
+	}
+	return select;
+}
+
+
+int get(int **numbers)//输入函数
+{
+	char ch = '\0';//读取数字的字符
+	int len = 0;
+	system("cls"); 	fflush(stdin);
+	printf("请输入要转换的数:");
+	for (*numbers = (int *)malloc(sizeof(int)); (ch = getchar()) != '\n'; *numbers = (int *)realloc(*numbers, (++len + 1)*sizeof(int)))
+		(*numbers)[len] = ch - '0';
+	return len;
+}
+
+
+int *decimalTObinary(int *numbers,int *len)//十进制转二进制
+{
+	int *binary = NULL, blen = 0, nlen = *len;
+	for (; nlen> 0;)
+	{
+		binary = (int *)realloc(binary, ++blen*sizeof(int));
+		binary[blen - 1] = numbers[nlen - 1] % 2;
+		for (int i = 0, carry = 0; i < nlen; ++i)
+		{
+			if (numbers[i] % 2)
+			{
+				numbers[i] = (numbers[i] + carry * 10) / 2;
+				carry = 1;
+			}
+			else
+			{
+				numbers[i] = (numbers[i] + carry * 10) / 2;
+				carry = 0;
+			}
+
+		}
+		for (int i = 0; i < nlen && !numbers[0]; )
+		{
+			for (i = 0; i < nlen - 1; ++i)
+				numbers[i] = numbers[i + 1];
+			numbers = (int *)realloc(numbers, --nlen*sizeof(int));
+		}
+	}
+	*len = blen;
+	return binary;
+}
+
+
+int *binaryTOdecimal(int *numbers, int *len)//二进制转十进制
+{
+	int i = 1;
+	int *decimal = NULL, dlen = 1, nlen = *len;
+	for (decimal = (int *)malloc(sizeof(int)), decimal[0] = numbers[0]; i < nlen; ++i)
+	{
+		decimal[dlen-1] = 2 * decimal[dlen-1] + numbers[i];
+	}
+	*len = dlen;
+	return decimal;
+}
+
+
+void put(int *numbers,int len)//输出结果
+{
+	printf("转换结果有%d位数.\n",len);
+	for (int i = len-1; i>=0; --i)
+	{
+		printf("%d",numbers[i]);
+	}
+	putchar(10);
+}

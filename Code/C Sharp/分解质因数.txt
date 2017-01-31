@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace CcharpExercise
+{
+    class Program
+    {
+        public bool primer(int number)
+        {
+            int sqrtnum = (int)Math.Sqrt(number),i = 0;
+            for (i = 2; i <= sqrtnum; ++i)
+            {
+                if (number % i == 0)
+                    break;
+            }
+            if (i > sqrtnum)
+                return true;
+            else
+                return false;
+        }
+        static void Main(string[] args)
+        {
+            int input = 0, number = 0, factor = 0;
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("请输入您要分解质因数的数字(正整数):");
+                number = input = Convert.ToInt32(Console.ReadLine());
+                if (input < 1)
+                {
+                    Console.WriteLine("输入错误!请输入正整数!");
+                    Console.Write("请按任意键继续. . . ");
+                    Console.ReadKey();
+                }
+                else
+                    break;
+            }
+            if (number == 1)
+            {
+                Console.WriteLine("1既不是质数也不是合数!");
+            }
+            else
+            {
+                Program program = new Program();
+                if (program.primer(number))
+                    Console.WriteLine("该数不是合数,无法分解质因数!");
+                else
+                {
+                    Console.Write("{0}分解质因数为:\n{0} = ", number);
+                    for (int i = 2; i <= number; )
+                    {
+                        if (number % i == 0 && program.primer(i))
+                        {
+                            Console.Write("{0}*", i);
+                            number /= i;
+                            i = 2;
+                        }
+                        else
+                            ++i;
+                    }
+                    Console.Write("\b ");
+                    Console.WriteLine();
+                }
+            }
+            Console.Write("请按任意键继续. . . ");
+            Console.ReadKey();
+        }
+    }
+}

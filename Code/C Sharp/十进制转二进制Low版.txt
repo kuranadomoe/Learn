@@ -1,0 +1,34 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace CcharpExercise
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int temp = 0;
+            char swap = '\0';
+            string decimalnum;
+            StringBuilder binary = new StringBuilder();
+            Console.WriteLine("请输入十进制数:");
+            decimalnum = Console.ReadLine();
+            for (; decimalnum != "0"; )
+            {
+                temp = Convert.ToInt32(decimalnum);
+                decimalnum = Convert.ToString(temp / 2);
+                binary.Append(Convert.ToString(temp % 2));
+            }
+            for (int i = 0; i < binary.Length / 2; ++i)
+            {
+                swap = binary[i];
+                binary[i] = binary[binary.Length - 1 - i];
+                binary[binary.Length - 1 - i] = swap;
+            }
+            Console.WriteLine("该数的二进制数为:\n{0}", binary);
+            Console.ReadKey();
+        }
+    }
+}

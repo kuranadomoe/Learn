@@ -1,0 +1,17 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+double i,pi,sn,an,m,n;
+for(i=0,m=1,n=1,sn=0;i<1000000000;++i)
+  {
+	an=m/n;
+	sn=an+sn;
+	m=-m;
+	n=n+2;
+	pi=4*sn;
+  }
+printf("%lf\n",pi);
+system("pause");
+return 0;
+}

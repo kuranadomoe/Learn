@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace CcharpExercise
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] str = new string[2];
+            int start = 0, end = 0;
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("输入筛选范围,以逗号隔开:");
+                str = Console.ReadLine().Split(',');
+                start = Convert.ToInt32(str[0]);
+                end = Convert.ToInt32(str[1]);
+                if (start >= 1 && end >= 3 && end > start)
+                    break;
+                else
+                {
+                    Console.WriteLine("输入有误!请输入一小一大两个不相等的正整数!");
+                    Console.Write("请按任意键继续...");
+                    Console.ReadKey();
+                }
+            }
+            for (int num; start <= end; ++start)
+            {
+                if (start < 2)
+                    continue;
+                double sqrtnum = Math.Sqrt((double)start);
+                for (num = 2; (double)num <= sqrtnum; ++num)
+                {
+                    if (start % num == 0)
+                        break;
+                }
+                if ((double)num > sqrtnum)
+                {
+                    Console.Write("{0}\t", start);
+                }
+            }
+            Console.WriteLine("\n请按任意键继续. . .");
+            Console.ReadKey();
+        }
+    }
+}

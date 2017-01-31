@@ -1,0 +1,18 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+int i,a,b,c;
+for(i=100;i<1000;++i)
+  {
+	a=i%10;
+	b=(i%100-a)/10;
+	c=(i-10*b-a)/100;
+	if(a*a*a+b*b*b+c*c*c!=i)
+		continue;
+	else
+		printf("%d\t",i);
+  }
+system("pause");
+return 0;
+}

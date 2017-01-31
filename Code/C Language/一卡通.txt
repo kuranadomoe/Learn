@@ -1,0 +1,399 @@
+#define _CRT_SECURE_NO_DEPRECATE//关掉scanf安全性检查
+#pragma warning(disable:4996)//关掉getch()的安全检查
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
+#define  MAXNUM   100
+
+
+void disp_init();           //显示初始画面模块 
+int  select_menu();        //显示菜单并输入功能选择
+void addnew(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int *num); //新建卡模块
+void initialiseaddnew(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int *num);//数据初始化
+void logout(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int num); //注销模块
+void modify(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int num); //修改卡信息模块
+void readcard(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int num);//消费模块
+void savemoney(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int num); //充值模块
+int exitout(void);//退出模块
+void inquiry(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int num);//查询卡信息模块
+int findcard(int  cardnumber, int *cnum, int *pflag, int num);//查询卡号
+void dispone(int * cnum, char *pname[], float *cmoney, float *cbalance, int index);//显示卡信息
+void dump(char *pname[],int num);//释放掉开新卡时malloc所申请的内存
+float input(void);//输入金额,判断是否大于0
+
+int main(int args, char *argv[])
+{
+	int   cnum[MAXNUM];            //存储每个卡的卡号，从1号开始编号
+	int   flag[MAXNUM];       //存储每张卡有效条件的值，0-有效，1-无效
+	char  *name[MAXNUM];            //持卡人姓名
+	float cmoney[MAXNUM];        //存储每个卡的每次充值金额
+	float cbalance[MAXNUM];     //存储每张卡余额   
+	int   num = 0;                       //当前卡数
+	int choose = '\0';     //功能选择
+	disp_init();      //显示系统初始欢迎界面
+	initialiseaddnew(cnum, flag, name, cmoney, cbalance, &num);//数据初始化
+	while (choose != 7)
+	{
+		choose = select_menu();     //显示菜单并输入功能选择
+		switch (choose)
+		{
+		case  1:  addnew(cnum, flag, name, cmoney, cbalance, &num); break; //新建卡功能
+		case  2:  logout(cnum, flag, name, cmoney, cbalance, num); break; //注销卡功能 
+		case  3:  modify(cnum, flag, name, cmoney, cbalance, num); break; //修改卡信息功能
+		case  4:  readcard(cnum, flag, name, cmoney, cbalance, num); break; //消费功能
+		case  5:  savemoney(cnum, flag, name, cmoney, cbalance, num); break;//充值功能
+		case  6:  inquiry(cnum, flag, name, cmoney, cbalance, num); break;  //查询卡信息功能
+		case  7:  choose = exitout();  break;                            //退出功能
+		default:  printf("功能选择输入错误!\n");
+		}
+	}
+	dump(name,num);//释放掉新建卡时malloc申请的内存
+	system("pause");
+	return 0;
+}
+
+
+//初始化界面
+void disp_init()
+{
+	system("cls");
+	printf("\t┏━━━━━━━━━━━━━━━━━━━━━━━━┓\n");
+	printf("\t┃                                                ┃\n");
+	printf("\t┃        欢迎使用校园一卡通系统V1.1版            ┃\n");
+	printf("\t┃                                                ┃\n");
+	printf("\t┃                                                ┃\n");
+	printf("\t┃                                                ┃\n");
+	printf("\t┃                                                ┃\n");
+	printf("\t┃                                                ┃\n");
+	printf("\t┃                                                ┃\n");
+	printf("\t┃                                                ┃\n");
+	printf("\t┃         由广东科技学院计算机系XXX开发          ┃\n");
+	printf("\t┃                                                ┃\n");
+	printf("\t┃         2014年10月11日    版权所有             ┃\n");
+	printf("\t┃                                                ┃\n");
+	printf("\t┗━━━━━━━━━━━━━━━━━━━━━━━━┛\n");
+	getch();//等按任意键继续
+	fflush(stdin);
+}
+
+
+//显示菜单并输入功能选择模块定义
+int select_menu()
+{
+	int  choose=0;
+	system("cls");
+	printf("\t┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n");
+	printf("\t┃                                                      ┃\n");
+	printf("\t┃                   GK-I校园一卡通系统                 ┃\n");
+	printf("\t┃                                                      ┃\n");
+	printf("\t┣━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n");
+	printf("\t┃                                                      ┃\n");
+	printf("\t┃               1.开   新    卡                        ┃\n");
+	printf("\t┃                                                      ┃\n");
+	printf("\t┃               2 .销        卡                        ┃\n");
+	printf("\t┃                                                      ┃\n");
+	printf("\t┃               3. 卡信息修改                          ┃\n");
+	printf("\t┃                                                      ┃\n");
+	printf("\t┃               4.卡   消    费                        ┃\n");
+	printf("\t┃                                                      ┃\n");
+	printf("\t┃               5.卡   充    值                        ┃\n");
+	printf("\t┃                                                      ┃\n");
+	printf("\t┃               6. 卡信息查询                          ┃\n");
+	printf("\t┃                                                      ┃\n");
+	printf("\t┃               7.退  出  系 统                        ┃\n");
+	printf("\t┃                                                      ┃\n");
+	printf("\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n");
+	while (printf("\t\t请输入功能选择(1-7):"), scanf("%d", &choose), choose<1 || choose>7)//循环条件里面的逗号表达式,以右值为判断条件 
+		printf("\t\t输入错误，请重新输入!\n");
+	return  choose;
+}
+
+//数据初始化
+void initialiseaddnew(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int *num)
+{
+	int i = 0;
+	for (i = 0; i < MAXNUM; i++)
+	{
+		cnum[i] = 0;
+		pflag[i] = 1;
+		pname[i] = NULL;
+		cmoney[i] = 0;
+		cbalance[i] = 0;
+	}
+	*num = 0;
+}
+
+
+/****************************************************************
+**   新建卡模块：通过参数传递卡信息数组和卡数num              **
+**   本功能模块间建立一个卡，如果有可用卡就是用该卡号，否则   **
+**   将产生一个新的卡号，并申请一个卡主姓名空间，输入卡信息   **
+*****************************************************************/
+void addnew(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int *num)
+{
+	int i=0, cardnumber=0;//cardnumber卡号位置
+	float charge=0;//充值金额
+	for (i = 0; i<=*num; i++)
+	{
+		if (pflag[i] == 1) break;     //找到一个未使用卡，退出循环
+	}
+	if (i == *num)
+	{
+		pname[i] = (char *)malloc(20);    //为新卡的姓名动态申请20字节空间
+		i = *num;
+		++*num;               //卡数加1
+	}
+	cardnumber = i;                    //获取卡号位置
+	printf("\t请输入持卡人姓名:");
+	fflush(stdin);//清空缓存区
+	gets(pname[cardnumber]);
+	printf("\t请输入要充值到卡内的金额：");
+	scanf("%f", &charge);
+	cnum[cardnumber] = cardnumber + 1;        //卡号是卡存储位置加1
+	cmoney[cardnumber] = charge;            //存储卡的充值金额
+	cbalance[cardnumber] = charge;          //新建的存储卡的余额是充值金额
+	pflag[cardnumber] = 0;                 //标记为有效卡
+	dispone(cnum, pname, cmoney, cbalance, cardnumber);  //显示卡信息
+	printf("\t开卡成功！\n\t");
+	system("pause");
+}
+
+
+/********************************************************************
+**   注销卡模块：输入一个要注销的卡号，如果该卡存在并有效，显示该卡**
+**   信息，然后将该卡有效标志设为1（成为无效卡）                  **
+*********************************************************************/
+void logout(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int num)
+{
+	int cardnumber, k;
+	printf("\t输入要销卡的卡号:");
+	scanf("%d", &cardnumber);
+	k = findcard(cardnumber, cnum, pflag, num);
+	if (k >= 0)
+	{
+		dispone(cnum, pname, cmoney, cbalance, k);  //显示卡信息
+		pflag[k] = 1;
+		printf("\t销卡成功！\n");
+	}
+	else
+	{
+		printf("\t查无此卡或为无效卡，销卡失败！\n");
+	}
+	getch();
+}
+
+
+/***************************************************************************
+**   修改卡信息模块:本模块修改卡信息，分为修改姓名、修改卡充值、修改余额  **
+**   修改前先输入卡号，并查找卡位置，若卡号正确有效则进入修改信息菜单选择 **
+**   修改，若查找失败，显示“无此卡号”                                   **
+****************************************************************************/
+void modify(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int num)
+{
+	int t=0,choose=0;
+	int cardnumber = 0;//将要输入的卡号
+	printf("\n\t请输入您要修改的卡号:");
+	fflush(stdin);
+	scanf("%d",&cardnumber);
+	t = findcard(cardnumber, cnum, pflag, num);
+	if (t == -1)
+	{
+		printf("此卡不存在或为无效卡!");
+		getch();
+	}
+	else
+	{
+		do
+		{
+			system("cls");
+			dispone(cnum, pname, cmoney, cbalance, cardnumber-1);  //显示卡信息
+			printf("\t1.修改姓名\n");
+			printf("\t2.修改充值金额\n");
+			printf("\t3.修改余额\n");
+			printf("\t4.取消修改\n");
+			printf("\t请输入您要修改的选项:");
+			scanf("%d", &choose);
+			switch (choose)
+			{
+			case 1:
+				printf("\t请输入新的姓名:");
+				scanf("%s", pname[cardnumber - 1]);
+				break;
+			case 2:
+				printf("\t请输入新的充值金额:");
+				cmoney[cardnumber - 1] = input();
+				break;
+			case 3:
+				printf("\t请输入新的余额:");
+				cbalance[cardnumber - 1] = input();
+				break;
+			case 4:
+				return;//结束修改函数
+			default:
+				printf("\t输入错误!\n");
+				break;
+			}
+			printf("\t修改后的信息:\n");
+			dispone(cnum, pname, cmoney, cbalance, cardnumber - 1);  //显示卡信息
+			printf("\t按0继续修改,按任意键退出修改.");
+			scanf("%d",&choose);
+		}while (choose==0);
+	}
+}
+
+//消费
+void readcard(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int num)
+{
+	int t = 0, choose=0;
+	int cardnumber = 0;//将要输入的卡号
+	float consume = 0;//消费金额
+	printf("\n\t请输入您要消费的卡号:");
+	fflush(stdin);
+	scanf("%d", &cardnumber);
+	t = findcard(cardnumber, cnum, pflag, num);
+	if (t == -1)
+	{
+		printf("此卡不存在或为无效卡!");
+		getch();
+	}
+	else
+	{
+		do{
+			system("cls");
+			printf("\t您的卡信息为:\n");
+			dispone(cnum, pname, cmoney, cbalance, cardnumber - 1);  //显示卡信息
+			printf("\t请输入要消费的金额:");
+			consume = input();
+			if (consume > cbalance[cardnumber - 1])
+			{
+				printf("\t您的卡内余额不足!\n");
+				getch();
+				break;
+			}
+			else
+			{
+				cbalance[cardnumber - 1] -= consume;
+				printf("\t您消费了%.2f元.\n",consume);
+				printf("\t消费后的卡信息为:\n");
+				dispone(cnum, pname, cmoney, cbalance, cardnumber - 1);  //显示卡信息
+			}
+		} while (printf("\n\t继续消费请按1,退出请按任意键."), scanf("%d", &choose), choose == 1);
+	}
+}
+
+//充值
+void savemoney(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int num)
+{
+	int t = 0, choose = 0;
+	int cardnumber = 0;//将要输入的卡号
+	float recharge = 0;//充值金额
+	printf("\n\t请输入您要充值的卡号:");
+	fflush(stdin);
+	scanf("%d", &cardnumber);
+	t = findcard(cardnumber, cnum, pflag, num);
+	if (t == -1)
+	{
+		printf("此卡不存在或为无效卡!");
+		getch();
+	}
+	else
+	{
+		do{
+			system("cls");
+			printf("\t您的卡信息为:\n");
+			dispone(cnum, pname, cmoney, cbalance, cardnumber - 1);  //显示卡信息
+			printf("\t请输入要充值的金额:");
+			recharge = input();
+			cmoney[cardnumber - 1] = recharge;
+			cbalance[cardnumber - 1] += recharge;
+			printf("\t充值后的卡信息为:\n");
+			dispone(cnum, pname, cmoney, cbalance, cardnumber - 1);  //显示卡信息
+		} while (printf("\n\t继续充值请按1,退出请按任意键."), scanf("%d", &choose), choose == 1);
+	}
+}
+//查询
+void inquiry(int * cnum, int *pflag, char *pname[], float *cmoney, float *cbalance, int num)
+{
+	int t = 0, cardnumber = 0;
+	printf("\n\t请输入你要查询的卡号:");
+	fflush(stdin);
+	scanf("%d",&cardnumber);
+	t = findcard(cardnumber, cnum, pflag, num);
+	if (t >= 0)
+	{
+		printf("\t您所查询的卡号信息为:\n");
+		dispone(cnum, pname, cmoney, cbalance, t);
+	}
+	else
+		printf("\t查无此卡!\n");
+	t = getch();
+}
+
+
+//退出模块
+int exitout(void)
+{
+	char ch = '\0';
+	do
+	{
+		printf("\t确定要退出吗？(Y/N)");
+		fflush(stdin);//清空缓存区
+		ch = getchar();
+	} while (ch != 'Y' && ch != 'y' && ch != 'N' && ch != 'n');
+	if (ch == 'Y' || ch == 'y')
+		return 7;     //返回系统循环结束标志
+	else
+		return 0;   //返回0，表示不退出系统
+}
+
+
+
+/******************************************************************
+**   查找卡模块：该函数供有关模块调用，返回给定卡号的存储位置。***
+**   参数：待查卡号cardnumbe,卡号数组cnum，卡有效标志数组pflag **
+*******************************************************************/
+int findcard(int  cardnumber, int *cnum, int *pflag, int num)
+{
+	int i = 0;
+	for (i = 0; i<num; i++)
+	{
+		if (cnum[i] == cardnumber && pflag[i] == 0)
+			return i;             //返回卡存储位置
+	}
+	return -1;        //若查找失败返回-1
+}
+
+
+/***************************************************************
+** 显示给定位置卡信息模块函数                                **
+***************************************************************/
+void dispone(int * cnum, char *pname[], float *cmoney, float *cbalance, int index)
+{
+	printf("\t+===============================================+\n");
+	printf("\t|  卡号  |  姓名    |  充值金额  |  余    额    |\n");
+	printf("\t+--------+----------+------------+--------------|\n");
+	printf("\t|  %-4d  |%-10s|  %8.2f  |  %8.2f    |\n",cnum[index], pname[index], cmoney[index], cbalance[index]);
+	printf("\t+===============================================\n");
+}
+
+//释放掉新建卡时malloc申请的内存
+void dump(char *pname[],int num)
+{
+	int i = 0;
+	for (i = 0; i < num; i++)
+	{
+		free(pname[i]);
+	}
+}
+
+
+float input(void)//输入金额,判断是否大于0
+{
+	float money = 0;
+	while (scanf("%f",&money),money<0)
+	{
+		printf("\t输入错误!,请重新输入.\n");
+	}
+	return money;
+}

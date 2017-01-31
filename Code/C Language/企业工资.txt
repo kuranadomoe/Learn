@@ -1,0 +1,204 @@
+/*企业发放的奖金根据利润提成。
+利润I低于或等于10万元的，奖金可提10%；
+利润高于10万元，低于20万元，低于10万元的部分按10%提成，高于10万元的部分，可提成7.5%；
+20万到40万的，低于20万的部分仍按上述办法提成（下同）。高于20万元的部分按5%提成；
+40万到60万时，高于40万的部分按3%提成；60万到100万时，高于60万的部分按1.5%提成；
+高于100万元时，超过100万元的部分按1%提成。从键盘输当月利润I，求应发奖金总数？*/
+#include<stdio.h>
+int main()
+{
+long i,money;
+printf("输入利润计算奖金：\n");
+scanf("%ld",&i);
+if(i<0)
+  printf("恭喜你，你的公正司在亏损=.=但你别忘了发工资，否则茶水表@.@\n");
+else
+if(0<=i&&i<=100000)
+  {
+	money=i*0.1;
+	printf("应发奖金总数为%ld元。\n",money);
+  }
+else
+if(100000<i&&i<=200000)
+  {
+	money=(i-100000)*0.075+10000;
+	printf("应发奖金总数为%ld元。\n",money);
+  }
+else
+if(200000<i&&i<=400000)
+  {
+	money=(i-200000)*0.05+17500;
+	printf("应发奖金总数为%ld元。\n",money);
+  }
+else
+if(400000<i&&i<=600000)
+  {
+	money=(i-400000)*0.03+27500;
+	printf("应发奖金总数为%ld元。\n",money);
+  }
+else
+if(600000<i&&i<=1000000)
+  {
+	money=(i-600000)*0.015+33500;
+	printf("应发奖金总数为%ld元。\n",money);
+  }
+else
+if(1000000<i)
+  {
+	money=(i-600000)*0.01+36500;
+	printf("应发奖金总数为%ld元。\n",money);
+  }
+return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<stdio.h>
+#include<stdlib.h>
+int main(void)
+{
+	float i, money;
+	printf("输入利润计算奖金：\n");
+	scanf_s("%f", &i, 1);
+	if (i < 0)
+	{
+		printf("恭喜你，你的公正司在亏损=.=但别忘了发工资，否则查水表@.@\n");
+	}
+	else
+	{
+		switch (0)
+		{
+		case 0:
+			if (i <= 100000)
+			{
+				money = i*0.1;
+				break;
+			}
+			else
+				money = 10000;
+		case 1:
+			if (i <= 200000)
+			{
+				money = (i-100000)*0.075+money;
+				break;
+			}
+			else
+				money = 17500;
+		case 2:
+			if (i <= 400000)
+			{
+				money = (i - 200000)*0.05 + money;
+				break;
+			}
+			else
+				money = 27500;
+		case 3:
+			if (i <= 600000)
+			{
+				money = (i - 400000)*0.03 + money;
+				break;
+			}
+			else
+				money = 33500;
+		case 4:
+			if (i <= 1000000)
+			{
+				money = (i - 600000)*0.015 + money;
+				break;
+			}
+			else
+				money = 39500;
+		case 5:
+				money = (i - 1000000)*0.01 + money;
+				break;
+		}
+		printf("应发奖金总数为%.0f元。\n", money);
+	}
+	system("pause");
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<stdio.h>
+int main(void)
+{
+	long i,i1,money;
+	printf("输入利润计算奖金：\n");
+	scanf("%ld",&i);
+	i1=i/100000;
+	if(i<0)
+		i1=-1;
+	if(i>=1000000)
+		i1=10;
+	switch(i1)
+	{
+	case 0:
+		money=i*0.1;
+		printf("应发奖金总数为%ld元。\n",money);
+		break;
+	case 1:
+		money=(i-100000)*0.075+10000;
+		printf("应发奖金总数为%ld元。\n",money);
+		break;
+	case 3:
+	case 2:
+		money=(i-200000)*0.05+17500;
+		printf("应发奖金总数为%ld元。\n",money);
+		break;
+	case 5:
+	case 4:	
+		money=(i-400000)*0.03+27500;
+		printf("应发奖金总数为%ld元。\n",money);
+		break;
+	case 7:
+	case 8:
+	case 9:
+	case 6:	
+		money=(i-600000)*0.015+33500;
+		printf("应发奖金总数为%ld元。\n",money);
+		break;
+	case 10:	
+		money=(i-1000000)*0.01+39500;
+		printf("应发奖金总数为%ld元。\n",money);
+		break;
+	default:
+		printf("恭喜你，你的公正司在亏损=.=但别忘了发工资，否则查水表@.@\n");
+		break;
+	}
+	return 0;
+}

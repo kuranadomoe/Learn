@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+	int i,j,n,yang[15][15];
+	for(;;)
+	{
+		system("cls");
+		printf("请输入想要获得的杨辉三角的行数（15以内）：\n");
+		scanf("%d",&n);
+		for(i=0;i<n;++i)
+			for(j=0;j<=i;++j)
+			{
+				if(j==0||j==i)
+					yang[i][j]=1;
+				else
+					yang[i][j]=yang[i-1][j-1]+yang[i-1][j];
+			}
+			for(i=0;i<n;++i)
+			{
+				for(j=0;j<2*n-2*i-1;++j)
+					printf(" ");
+				for(j=0;j<=i;++j)
+					printf("%-5d",yang[i][j]);
+				printf("\n");
+			}
+		system("pause");
+	}
+	return 0;
+}

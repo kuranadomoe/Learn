@@ -1,0 +1,31 @@
+/******************************************************************
+***	File name:		Program.c									***
+***	Description:	输入一个最大为9位数的数字金额,输出它的大写	***
+***					例如输入123456789,则输出:					***
+***					壹亿贰千叁百肆十伍万陆千柒百捌十玖元		***
+***	Author:			Star Cluster								***
+***	Date:			2016-11-8									***
+*******************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main(int argc, char*argv[])
+{
+	typedef char * String;
+	String chinese[] = { "零","壹","贰","叁","肆","伍","陆","柒","捌","玖","元","拾","佰","千","万","亿" };
+	char str[10] = "";
+	int numerial = 0, bit = 0;
+	fprintf(stdout, "Please input a numerial:\n");
+	for (fscanf(stdin, "%d", &numerial);numerial > 0;numerial /= 10)
+		str[bit++] = numerial % 10;//若要存字符记得加上'0'
+	for (--bit;bit >= 0;--bit)
+	{
+		fputs(chinese[str[bit]], stdout);
+		fputs(chinese[bit == 8 ? 15 : bit == 4 ? 14 : 10 + bit % 4], stdout);
+	}
+	fputc('\n', stdout);
+	system("pause");
+	return 0;
+}
+

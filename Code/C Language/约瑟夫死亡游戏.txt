@@ -1,0 +1,58 @@
+/******************************************************************************************************
+Name        : Josephus.c
+Author      : star_cluster
+Description : 约瑟夫环（约瑟夫问题）是一个数学的应用问题,
+			  已知n个人（以编号1，2，3...n分别表示）围坐在一张圆桌周围,从编号为k的人开始报数,
+			  数到m的那个人出列；他的下一个人又从1开始报数，数到m的那个人又出列,
+			  依此规律重复下去,直到圆桌周围的人全部出列.
+			  在此处只实现从1号开始报数,直到剩余指定人数则停止.
+*******************************************************************************************************/
+#define _CRT_SECURE_NO_DEPRECATE//关掉scanf安全性检查
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#include <Windows.h>
+int main(void)
+{
+	int n = 0, survive = 0, die = 0;//n是参与约瑟夫游戏的总人数,survive是幸存人数,die是死亡编号(第die位的人死亡)
+	int surplus = 0, num = 0, i = 0;//surplus记录剩余人数,num为当前报数,i为循环判断变量
+	int *human = NULL;//动态数组human,代表约瑟夫环
+	printf("约瑟夫问题，共有N个犹太人，包括约瑟夫和他的朋友，这N个人决定自杀， 但是约瑟夫和他朋友都不想死，于是他们设计了一个死亡游戏 ，最终他俩免于一死。\n游戏规则：N个人围成一圈，然后从某个人开始数数（此人算作第一个），第M个人自杀，有一个人死后，从他下一个人开始数数。\n\n");
+	printf("请输入游戏人数和最后幸存人数:");
+	while (scanf("%d %d", &n, &survive), n <= survive || survive <= 0||survive>n)
+		printf("输入错误,请重新输入!\n");
+	printf("请输入死亡编号:");
+	while (scanf("%d", &die), die <= 0 || die > n)
+		printf("输入错误,请重新输入!\n");
+	human = (int *)malloc(n*sizeof(int));
+	for (i = 0; i < n; human[i] = 1, i++);//初始化,1代表活着,0代表死亡
+	for (surplus = n, num = 0, i = 0; surplus != survive; ++i)
+	{
+		if (i == n)
+		{
+			i = 0;
+		}
+		if (human[i] == 1)
+		{
+			++num;
+		}
+		else
+			continue;
+		if (num == die)
+		{
+			human[i] = 0;
+			--surplus;
+			num = 0;
+		}
+	}
+	printf("最后幸存者所处的位置为:\n");
+	for (i = 0; i < n; i++)//输出幸存者编号
+	{
+		if (human[i]==1)
+			printf("第%d位  ",i+1);
+	}
+	putchar(10);
+	free(human);
+	system("pause");
+	return 0;
+}

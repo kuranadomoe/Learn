@@ -1,0 +1,14 @@
+#include<stdio.h>
+int main()
+{
+	int i,j,k;
+	for(j=1,k=1;j<=100;k++)
+	{
+		for(i=1;i<=k;j++,i++)
+		{
+			printf("%5d",j);
+		}
+		printf("\n");
+	}
+	return 0;
+}

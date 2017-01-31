@@ -1,0 +1,25 @@
+#include<stdio.h>
+int main()
+{
+	int i,j,m,n,t,a[3][3];
+	for(i=0;i<3;++i)
+		for(j=0;j<3;++j)
+			scanf("%d",&a[i][j]);				
+	for(m=2;m>=0;--m)//		for(m=0;m<3;++m)
+		for(n=2;n>=0;--n)//		for(n=0;n<3;++n)      用这个替换左边的循环，将得到从大到小排列的数组。
+			for(i=2;i>=0;--i)//		for(i=0;i<3;++i)
+				for(j=2;j>=0;--j)//		for(j=0;j<3;++j)*/	
+				{
+					if(a[m][n]>a[i][j])//	把大于号改成小于号也可达到同样效果
+					{
+						t=a[i][j];
+						a[i][j]=a[m][n];
+						a[m][n]=t;
+					}	
+				}
+	for(i=0;i<3;++i)
+		for(j=0;j<3;++j)
+			printf("%d  ",a[i][j]);
+	printf("\n");
+	return 0;
+}

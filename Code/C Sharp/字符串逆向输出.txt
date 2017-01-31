@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace CcharpExercise
+{
+    class Program
+    {
+        public void invert()
+        {
+            char ch = Convert.ToChar(Console.Read());
+            if (ch != '\n')
+            {
+                invert();
+                Console.Write("{0}", ch);
+            }
+        }
+        static void Main(string[] args)
+        {
+            Program test = new Program();
+            test.invert();
+        }
+
+    }
+}

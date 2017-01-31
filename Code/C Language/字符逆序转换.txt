@@ -1,0 +1,17 @@
+#include<stdio.h>
+int main()
+{ 
+    int i;
+	char mima[20];
+	printf("ÇëÊäÈëÃÜÂë£º\n");
+	for(i=0;((mima[i]=getchar())>='A'&&mima[i]<='Z')||(mima[i]>='a'&&mima[i]<='z');++i)
+	  {	  
+	    if(mima[i]>='A'&&mima[i]<='Z')
+	      mima[i]=155-mima[i];
+        if(mima[i]>='a'&&mima[i]<='z')
+          mima[i]=219-mima[i];
+      }
+    for(i=0;i<20;++i)
+      printf("%c",mima[i]);
+	return 0;
+}

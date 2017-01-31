@@ -1,0 +1,148 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+#include<time.h>
+int main()
+{
+	system("color 70");
+	//函数声明
+	void time(int *y,int *M,int *d,int *h,int *m,int *s);
+	void curriculum(int week);
+	int week(int year,int month,int day);
+	
+	//获取时间
+	int year,month,day,hour,min,sec;
+	int *y=&year,*M=&month,*d=&day,*h=&hour,*m=&min,*s=&sec;
+	time(y,M,d,h,m,s);
+	
+	//获取周数
+	int weeks;
+	weeks=week(year,month,day);
+
+	//当前课表
+	printf("\t\t\t%d %d %d %d:%d:%d", year, month, day, hour, min, sec);
+	curriculum(weeks);
+
+
+	//控制翻页
+	for(int k;;)
+	{
+		k=getch();
+		system("cls");
+		switch(k)
+		{
+		case '0':
+			printf("\t\t\t%d %d %d %d:%d:%d", year, month, day, hour, min, sec);
+			weeks=week(year,month,day);
+			curriculum(weeks);
+			break;
+		case '1':
+			weeks-=1;
+			curriculum(weeks);
+			break;
+		case '3':
+			weeks+=1;
+			curriculum(weeks);
+			break;
+		default:
+			printf("error!");
+			break;
+		}
+	}
+	return 0;
+}
+
+//时间函数
+void time(int *y,int *M,int *d,int *h,int *m,int *s)
+{
+
+	time_t nowtime; 
+	time( &nowtime );   //获取时间
+
+
+	struct tm *timeinfo;  //定义时间结构体
+	timeinfo = localtime( &nowtime );  //转化为当地时间
+
+	int year, month, day, hour, min, sec;
+	year = timeinfo->tm_year + 1900;   //从1900年开始计数，所以+1900
+	month = timeinfo->tm_mon + 1;    //从0开始计数，所以+1
+	day = timeinfo->tm_mday;
+	hour = timeinfo->tm_hour;
+	min = timeinfo->tm_min;
+	sec = timeinfo->tm_sec;
+	*y=year,*M=month,*d=day,*h=hour,*m=min,*s=sec;
+
+}
+
+//获取周数
+int week(int year,int month,int day)
+{
+	int weeks=0;
+	for(int i=9;i<month;i++)
+	{
+		if(i==1||i==3||i==5||i==7||i==8||i==10||i==12)
+			weeks+=31;
+		if(i==4||i==6||i==9||i==11)
+			weeks+=30;
+		if(i==2&&(year%4==0&&year%100!=0||year%400==0))
+			weeks+=29;
+		if(i==2&&(year%4!=0&&year%100==0||year%400!=0))
+			weeks+=28;
+	}
+	weeks+=day;
+	if(weeks%7==0)
+		weeks=weeks/7;
+	else
+		weeks=weeks/7+1;
+	return weeks;
+}
+
+
+//输出课表
+void curriculum(int week)
+{
+	printf("\n\t\t\t\t第%d周",week);
+	printf("\n\t|-------------------------------------------------------------|");
+	printf("\n\t| 节次 |  星期一  |  星期二  |  星期三  |  星期四  |  星期五  |");
+	printf("\n\t|-------------------------------------------------------------|");
+	printf("\n\t|上|第 |          |          |          |          |          |");
+	if(week%2==0)
+	{
+		printf("\n\t|  |一 | 大学英语 |形势与政策| 高等数学 | 大学英语 |          |");
+		printf("\n\t|  |二 |   6-301  |   4-205  |   2-202  |   6-301  |          |");
+		printf("\n\t|  |节 |          |  许丽萍  |          |          |          |");
+	}
+	else
+	{
+		printf("\n\t|  |一 | 大学英语 |          | 高等数学 | 大学英语 |          |");
+		printf("\n\t|  |二 |   6-301  |          |   2-202  |   6-301  |          |");
+		printf("\n\t|  |节 |          |          |          |          |          |");
+	}
+	printf("\n\t|  |---|------------------------------------------------------|");
+	printf("\n\t|  |第 |中国近代史| C语言程序| C语言程序| C语言程序| 思想道德 |");
+	printf("\n\t|  |三 |   纲要   |   设计   |   C语言  |   C语言  |   修养   |");
+	printf("\n\t|  |四 |   C-308  |   2-303  |   2-404  |   2-304  |   C-608  |");
+	printf("\n\t|午|节 |  孙贵杨  |   周春晖 |   周春晖 |   周春晖 |   曾检成 |");
+	printf("\n\t|=============================================================|");
+	if(week%2==0)
+	{
+		printf("\n\t|下|第 |          |物联网工程|          |          |          |");
+		printf("\n\t|  |五 |   体育   |   导论   |          |          |          |");
+		printf("\n\t|  |六 |          |  2-305   |          |          |          |");
+		printf("\n\t|  |节 |   彭俊峰 |  杜世平  |          |          |          |");
+	}
+	else
+	{
+		printf("\n\t|下|第 |          |          |          |          |          |");
+		printf("\n\t|  |五 |   体育   |          |          | 高等数学 |          |");
+		printf("\n\t|  |六 |          |          |          |   2-202  |          |");
+		printf("\n\t|  |节 |   彭俊峰 |          |          |          |          |");
+	}
+	printf("\n\t|  |---|------------------------------------------------------|");
+	printf("\n\t|  |第 |          | 思想道德 |          |物联网工程|          |");
+	printf("\n\t|  |七 |          |   修养   |          |   导论   |          |");
+	printf("\n\t|  |八 |          |   C-607  |          |   2-303  |          |");
+	printf("\n\t|午|节 |          |   曾检成 |          |   杜世平 |          |");
+	printf("\n\t|-------------------------------------------------------------|");
+	printf("\n");
+}

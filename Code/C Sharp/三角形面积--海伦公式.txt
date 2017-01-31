@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CsharpExercise
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int side1 = 0, side2 = 0, side3 = 0;
+            float area = 0f;
+            double perimeter = 0;
+            string[] value = new string[3];
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("请输入三角形的三条边,以空格隔开,回车结束");
+                value = Console.ReadLine().Split(' ');
+                side1 = Convert.ToInt32(value[0]);
+                side2 = Convert.ToInt32(value[1]);
+                side3 = Convert.ToInt32(value[2]);
+                if (side1 + side2 > side3 && side1 + side3 > side2 && side2 + side3 > side1)
+                {
+                    perimeter = (double)(side1 + side2 + side3) / 2;
+                    area = (float)Math.Sqrt(perimeter * (perimeter - side1) * (perimeter - side2) * (perimeter - side3));
+                    Console.WriteLine("三角形的面积是{0}", area);
+                    Console.WriteLine("感谢您的使用,再见!");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("不能组成三角形!\n请按任意键继续...");
+                    Console.ReadKey();
+                }
+            }
+            Console.ReadKey();
+        }
+    }
+}

@@ -1,0 +1,25 @@
+#include<stdio.h>
+#include<math.h>
+int main()
+{
+	double a,b,c;
+	printf("输入边长，用空格隔开：\n");
+	scanf("%lf %lf %lf",&a,&b,&c);
+	if(a+b<=c||a+c<=b||b+c<=a||abs(a-b)>=c||abs(a-c)>=b||abs(b-c)>=a)
+		printf("不是三角形\n");
+	else
+		if(a==b&&b==c)
+			printf("等边三角形\n");
+		else
+			if((a==b||a==c||b==c)&&(a*a+b*b!=c*c||a*a+c*c!=b*b||b*b+c*c!=a*a))
+				printf("等腰三角形\n");
+			else
+				if((a!=b&&a!=c&&b!=c)&&(a*a+b*b==c*c||a*a+c*c==b*b||b*b+c*c==a*a))
+					printf("直角三角形\n");
+				else 
+					if((a==b||a==c||b==c)&&(a*a+b*b==c*c||a*a+c*c==b*b||b*b+c*c==a*a))
+						printf("等腰直角三角形\n");
+					else
+						printf("一般三角形\n");
+	return 0;
+}

@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <stdint.h>
+
+
+int main(int argc, char*argv[])
+{
+	uint16_t bitflag = 0, age = 0;
+	for (age = 10;bitflag != 0x3ff;++age)
+	{
+		bitflag = 0;
+		for (int pow3 = age*age*age, pow4 = age*age*age*age;pow4 != 0;pow3 /= 10, pow4 /= 10)
+			bitflag |= ((1 << (pow3 % 10)) | (1 << (pow4 % 10)));
+	}
+	fprintf(stdout, "%d\n", age - 1);
+	system("pause");
+	return 0;
+}

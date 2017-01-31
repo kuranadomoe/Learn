@@ -1,0 +1,31 @@
+#include<stdio.h>
+int main()
+{
+int x,y,result;
+for(y=1;y<10;y++)
+{
+	for(x=1;x<=y;x++)
+	{
+		result=x*y;//先赋值再表达，因此需要放在x，y有明确值的地方
+		printf("%d*%d=%-4d",x,y,result);
+	}
+	printf("\n");
+}
+return 0;
+}
+
+
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+int m,n;
+for(m=1;m<=9;m++)
+  {
+	for(n=1;n<=m;n++)
+	printf("%d*%d=%d\t",n,m,m*n);
+	printf("\n");
+  }
+return 0;
+}
+

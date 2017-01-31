@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace CcharpExercise
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            for (int num = 100; num < 1000; ++num)
+            {
+                if (Math.Pow(num / 100, 3) + Math.Pow(num / 10 % 10, 3) + Math.Pow(num % 10, 3) == num)
+                {
+                    Console.Write("{0}\t",num);
+                }
+            }
+            Console.Write("请按任意键继续. . .");
+            Console.ReadKey();
+        }
+    }
+}

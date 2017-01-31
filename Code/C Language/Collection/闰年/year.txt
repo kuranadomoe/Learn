@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+long year;
+int i=1;
+printf("请输入年份并按回车键进行识别：\n");
+do
+{
+scanf("%d",&year);
+system("cls");
+if((year%4==0&&year%100!=0)||year%400==0)
+switch(year%12)
+{
+case 0:printf("%d年是猴年闰年。\n",year);break;
+case 1:printf("%d年是鸡年闰年。\n",year);break;
+case 2:printf("%d年是狗年闰年。\n",year);break;
+case 3:printf("%d年是猪年闰年。\n",year);break;
+case 4:printf("%d年是鼠年闰年。\n",year);break;
+case 5:printf("%d年是牛年闰年。\n",year);break;
+case 6:printf("%d年是虎年闰年。\n",year);break;
+case 7:printf("%d年是兔年闰年。\n",year);break;
+case 8:printf("%d年是龙年闰年。\n",year);break;
+case 9:printf("%d年是蛇年闰年。\n",year);break;
+case 10:printf("%d年是马年闰年。\n",year);break;
+case 11:printf("%d年是羊年闰年。\n",year);break;
+default:printf("输入错误！");
+}
+else
+switch(year%12)
+{
+case 0:printf("%d年是猴年平年。\n",year);break;
+case 1:printf("%d年是鸡年平年。\n",year);break;
+case 2:printf("%d年是狗年平年。\n",year);break;
+case 3:printf("%d年是猪年平年。\n",year);break;
+case 4:printf("%d年是鼠年平年。\n",year);break;
+case 5:printf("%d年是牛年平年。\n",year);break;
+case 6:printf("%d年是虎年平年。\n",year);break;
+case 7:printf("%d年是兔年平年。\n",year);break;
+case 8:printf("%d年是龙年平年。\n",year);break;
+case 9:printf("%d年是蛇年平年。\n",year);break;
+case 10:printf("%d年是马年平年。\n",year);break;
+case 11:printf("%d年是羊年平年。\n",year);break;
+default:printf("输入错误！");
+}
+i=++i;
+}
+while(i<=3);
+printf("\n\t   over\n\1\t\2\t\1\t\2\n");
+system("pause");
+return 0;
+}
