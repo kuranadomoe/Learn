@@ -13,19 +13,20 @@ namespace CcharpExercise
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("请输入要打印的杨辉三角的层数:");
-            int[] arr = new int[int.Parse(Console.ReadLine())];
-            for (int i = 0; i < arr.Length; ++i)
-            {
-                Console.Write("".PadRight((arr.Length - i - 1) * 2));
-                for (int j = i; j >= 0; --j)
-                {
-                    arr[j] = (j == 0 || j == i) ? 1 : (arr[j] + arr[j - 1]);
-                    Console.Write("{0,-4:d}", arr[j]);
-                }
-                Console.WriteLine();
-            }
+            CompareFile(@"C:\Users\StarCluster\Desktop\one.lua",@"C:\Users\StarCluster\Desktop\two.lua");
             Pause();
+        }
+        public static void CompareFile(string file1path,string file2path)
+        {
+            var hash = System.Security.Cryptography.HashAlgorithm.Create();
+            var stream_1 = new System.IO.FileStream(file1path, System.IO.FileMode.Open);
+            byte[] hashByte_1 = hash.ComputeHash(stream_1); stream_1.Close(); //计算第二个文件的哈希值
+            var stream_2 = new System.IO.FileStream(file2path, System.IO.FileMode.Open);
+            byte[] hashByte_2 = hash.ComputeHash(stream_2); stream_2.Close(); //比较两个哈希值
+            if (BitConverter.ToString(hashByte_1) == BitConverter.ToString(hashByte_2))
+                Console.WriteLine("两个文件相等");
+            else
+                Console.WriteLine("两个文件不等");
         }
         public static void Pause()
         {
