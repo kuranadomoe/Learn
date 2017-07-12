@@ -1,0 +1,13 @@
+1480223799369	Rename local variable 'foo'
+1480228315262	Rename local variable 'stack'
+1480228331644	Rename field 'stack'
+1480228344580	Rename field 'stack'
+1480228352363	Rename local variable 'stack'
+1480229128210	Rename local variable 'numeral'
+1480230519912	Delete element
+1480231007203	Delete element
+1480231029315	Delete element
+1480231840565	Extract interface 'Runnable'
+1480231856980	Delete element
+1480231886435	Delete element
+1480233106617	Rename local variable 'pro'

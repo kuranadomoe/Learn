@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;prime&apos; in &apos;Main.main(...)&apos; to &apos;num1&apos;&#x0D;&#x0A;- Original project: &apos;Exercise3&apos;&#x0D;&#x0A;- Original element: &apos;Main.main(String[]).prime&apos;&#x0D;&#x0A;- Renamed element: &apos;prime&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;prime&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{Main.java[Main~main~\[QString;@prime!143!155!147!151!I!0!false" name="num1" references="true" stamp="1475040060853" version="1.0"/>
+</session>

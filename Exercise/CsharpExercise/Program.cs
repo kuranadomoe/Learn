@@ -13,7 +13,11 @@ namespace CcharpExercise
     {
         static void Main(string[] args)
         {
-            CompareFile(@"C:\Users\StarCluster\Desktop\one.lua",@"C:\Users\StarCluster\Desktop\two.lua");
+            //CompareFile(@"C:\Users\StarCluster\Desktop\one.lua",@"C:\Users\StarCluster\Desktop\two.lua");
+            int v1 = 10086;
+            object oj = (object)v1;
+            string str = oj.ToString();
+            Console.WriteLine(str);
             Pause();
         }
         public static void CompareFile(string file1path,string file2path)
