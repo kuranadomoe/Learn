@@ -92,7 +92,9 @@ namespace LightningSpecialEffects
         {
             if (e.Button == MouseButtons.Left)
             {
-                startPoint.Location = new Point(labelLastPoint.X + Control.MousePosition.X - mouseLastPoint.X, labelLastPoint.Y + Control.MousePosition.Y - mouseLastPoint.Y);
+                Point newPosition = new Point(labelLastPoint.X + Control.MousePosition.X - mouseLastPoint.X, labelLastPoint.Y + Control.MousePosition.Y - mouseLastPoint.Y);
+                if (newPosition.X >= 0 && newPosition.X <= 480 && newPosition.Y >= 0 && newPosition.Y <= 400)
+                    startPoint.Location = newPosition;
                 se.StartPoint = startPoint.Location;
             }
         }
@@ -106,7 +108,9 @@ namespace LightningSpecialEffects
         {
             if (e.Button == MouseButtons.Left)
             {
-                endPoint.Location = new Point(labelLastPoint.X + Control.MousePosition.X - mouseLastPoint.X, labelLastPoint.Y + Control.MousePosition.Y - mouseLastPoint.Y);
+                Point newPosition = new Point(labelLastPoint.X + Control.MousePosition.X - mouseLastPoint.X, labelLastPoint.Y + Control.MousePosition.Y - mouseLastPoint.Y);
+                if (newPosition.X >= 0 && newPosition.X <= 480 && newPosition.Y >= 0 && newPosition.Y <= 400)
+                    endPoint.Location = newPosition;
                 se.EndPoint = endPoint.Location;
             }
         }

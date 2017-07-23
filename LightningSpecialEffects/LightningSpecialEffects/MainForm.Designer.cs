@@ -71,7 +71,7 @@
             // 
             // lineWidthTrackbar
             // 
-            this.lineWidthTrackbar.Location = new System.Drawing.Point(168, 204);
+            this.lineWidthTrackbar.Location = new System.Drawing.Point(12, 404);
             this.lineWidthTrackbar.Minimum = 1;
             this.lineWidthTrackbar.Name = "lineWidthTrackbar";
             this.lineWidthTrackbar.Size = new System.Drawing.Size(104, 45);
@@ -83,7 +83,7 @@
             // 
             this.lineColorComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.lineColorComboBox.FormattingEnabled = true;
-            this.lineColorComboBox.Location = new System.Drawing.Point(12, 204);
+            this.lineColorComboBox.Location = new System.Drawing.Point(122, 429);
             this.lineColorComboBox.Name = "lineColorComboBox";
             this.lineColorComboBox.Size = new System.Drawing.Size(121, 20);
             this.lineColorComboBox.TabIndex = 3;
@@ -93,11 +93,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(484, 461);
             this.Controls.Add(this.lineColorComboBox);
             this.Controls.Add(this.lineWidthTrackbar);
             this.Controls.Add(this.endPoint);
             this.Controls.Add(this.startPoint);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(500, 500);
+            this.MinimumSize = new System.Drawing.Size(500, 500);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LightningSpecialEffects";
