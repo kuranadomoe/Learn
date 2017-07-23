@@ -10,11 +10,24 @@ using System.Windows.Forms;
 
 namespace LightningSpecialEffects
 {
-    public partial class mainForm : Form
+    public partial class MainForm : Form
     {
-        public mainForm()
+        public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            System.Drawing.Pen myPen;
+            // 画笔颜色 
+            myPen = new System.Drawing.Pen(System.Drawing.Color.Black);
+            System.Drawing.Graphics formGraphics = this.CreateGraphics();
+            // 画线 
+            formGraphics.DrawLine(myPen, 100,100,200,200);
+            //释放画笔和画布资源 
+            myPen.Dispose();
+            formGraphics.Dispose();
         }
     }
 }

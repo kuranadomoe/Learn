@@ -1,6 +1,6 @@
 ﻿namespace LightningSpecialEffects
 {
-    partial class mainForm
+    partial class MainForm
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -30,13 +30,15 @@
         {
             this.SuspendLayout();
             // 
-            // mainForm
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Name = "mainForm";
+            this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LightningSpecialEffects";
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.ResumeLayout(false);
 
         }
