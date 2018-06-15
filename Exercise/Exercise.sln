@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsharpExercise", "CsharpExercise\CsharpExercise.csproj", "{546C948F-91F7-44C0-869A-991408EDE52D}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CLanguageExercise", "CLanguageExercise\CLanguageExercise.vcxproj", "{5573DEF7-683C-4F45-920C-FFBB42DAB888}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormExercise", "FormExercise\FormExercise.csproj", "{77A9736B-4D1E-466E-8D1A-0658768262CF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebExercise", "WebExercise\WebExercise.csproj", "{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,27 +75,8 @@ Global
 		{77A9736B-4D1E-466E-8D1A-0658768262CF}.Release|Win32.ActiveCfg = Release|Any CPU
 		{77A9736B-4D1E-466E-8D1A-0658768262CF}.Release|x64.ActiveCfg = Release|Any CPU
 		{77A9736B-4D1E-466E-8D1A-0658768262CF}.Release|x64.Build.0 = Release|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Debug|Win32.Build.0 = Debug|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Debug|x64.Build.0 = Debug|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Release|Win32.ActiveCfg = Release|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Release|Win32.Build.0 = Release|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Release|x64.ActiveCfg = Release|Any CPU
-		{3128B2E8-85F1-4D76-A72B-5CB251F0EAB8}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B01E5478-8373-48D2-96CC-0A08A2FB03EC}
 	EndGlobalSection
 EndGlobal

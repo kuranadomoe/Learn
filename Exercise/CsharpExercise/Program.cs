@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
 
 namespace CcharpExercise
 {
@@ -14,15 +13,11 @@ namespace CcharpExercise
     {
         static void Main(string[] args)
         {
-            string[] addrs = new string[] { "广东省韶关市", "北京市朝阳区", "江西省赣州市", "云南省边城" };
-            foreach (string str in addrs)
-            {
-                foreach (var item in Regex.Matches(str, ".*?省|.*?市", RegexOptions.None))
-                {
-                    Console.WriteLine(item.ToString());
-                    break;
-                }
-            }
+            //CompareFile(@"C:\Users\StarCluster\Desktop\one.lua",@"C:\Users\StarCluster\Desktop\two.lua");
+            int v1 = 10086;
+            object oj = (object)v1;
+            string str = oj.ToString();
+            Console.WriteLine(str);
             Pause();
         }
         public static void CompareFile(string file1path,string file2path)
