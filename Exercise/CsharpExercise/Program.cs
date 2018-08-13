@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Net;
+using System.IO;
+using static System.Console;
 
 namespace CcharpExercise
 {
@@ -14,11 +17,33 @@ namespace CcharpExercise
     {
         static void Main(string[] args)
         {
-            Type type = Type.GetTypeFromProgID("SAPI.SpVoice");
-            dynamic spVoice = Activator.CreateInstance(type);
-            spVoice.Speak("敏捷的棕色狐狸越过了懒狗.");
-            spVoice.Speak("The quick brown fox jumps over the lazy dog.");
+            WebTest();
             Pause();
+
+        }
+        public static void WebTest()
+        {
+            for (; ; )
+            {
+                try
+                {
+                    //获取或设置用于向Internet资源的请求进行身份验证的网络凭据
+                    WebClient MyWebClient = new WebClient
+                    {
+                        Credentials = CredentialCache.DefaultCredentials
+                    };
+                    //从指定网站下载数据
+                    Byte[] pageData = MyWebClient.DownloadData(@"http://cj.choclatl.com/");
+                    string pageHtml = Encoding.UTF8.GetString(pageData);
+
+                    Console.WriteLine(pageHtml);
+                }
+                catch (WebException webEx)
+                {
+                    Console.WriteLine(webEx.Message.ToString());
+                    Pause();
+                }
+            }
         }
         public static void CompareFile(string file1path,string file2path)
         {
