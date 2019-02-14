@@ -12,7 +12,7 @@ namespace WebExercise.Pages
 
         public void OnGet()
         {
-            Message = "Your application description page.";
+            Message = "繁星的网站(未完成)\r\n";
         }
     }
 }

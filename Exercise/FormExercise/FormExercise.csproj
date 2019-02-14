@@ -45,6 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DemoResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DemoResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="FormExercise.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,6 +58,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TripleDESCryptography.cs" />
+    <EmbeddedResource Include="DemoResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DemoResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormExercise.resx">
       <DependentUpon>FormExercise.cs</DependentUpon>
     </EmbeddedResource>
@@ -64,6 +74,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

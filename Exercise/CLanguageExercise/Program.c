@@ -5,7 +5,7 @@
 
 int main(int argc, char*argv[])
 {
-
+	printf("%d\n", CHAR_BIT);
 	system("pause");
 	return 0;
 }

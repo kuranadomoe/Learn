@@ -10,6 +10,10 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.IO;
 using static System.Console;
+using System.Drawing;
+using System.IO.Pipes;
+using Microsoft.Win32;
+using System.Data;
 
 namespace CcharpExercise
 {
@@ -17,10 +21,100 @@ namespace CcharpExercise
     {
         static void Main(string[] args)
         {
-            WebTest();
+            DataTable demo = new DataTable("DemoTable");
+            demo.Columns.Add("C1");
+            demo.Columns.Add("C2");
+            demo.Columns.Add("C3");
+            DataRow r1 = demo.NewRow();
+            r1["C1"] = "A1";
+            r1["C2"] = "A2";
+            r1["C3"] = "A3";
+            demo.Rows.Add(r1);
+            r1 = demo.NewRow();
+            r1["C1"] = "A1";
+            r1["C2"] = "A2";
+            r1["C3"] = "A3";
+            demo.Rows.Add(r1);
+            WriteLine($"DefaultView: {demo.DefaultView.ToTable(true, "C1").Rows.Count}");
+            WriteLine($"Table:       {demo.Rows.Count}");
             Pause();
-
+            return;
+            System.Windows.Forms.NotifyIcon notifyIcon = new System.Windows.Forms.NotifyIcon();
+            notifyIcon.Icon = new Icon(@"D:\Temp\if_multimedia-42_2849794.ico");
+            notifyIcon.Text = "Demo";
+            notifyIcon.Visible = true;
+            Pause();
+            double flow = 0;
+            string[] data = File.ReadAllLines(@"D:\Download\ins-gs1sv5fm-外网出带宽 (1).csv");
+            foreach(var line in data)
+            {
+                WriteLine(line);
+                string bandwidthUsed = line.Split(',')[1];
+                if (bandwidthUsed != "" && bandwidthUsed != "数据")
+                {
+                    int tmp = (int)(double.Parse(bandwidthUsed) * 100);
+                    double unitBWUsed = (double)tmp/100;
+                    flow += unitBWUsed / 8 * 60;
+                }
+            }
+            WriteLine($"总流量:{flow}M,费用:{flow/1024 * 0.8}元");
+            Pause();
+            WebTest();
         }
+
+        public static void LookupTest()
+        {
+            var names = new List<string>();
+            names.Add("Smith");
+            names.Add("Stevenson");
+            names.Add("Jones");
+
+            var namesByInitial = names.ToLookup(n => n[0]);
+        }
+
+        private static void Get45PlusFromRegistry()
+        {
+            const string subkey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
+
+            using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(subkey))
+            {
+                if (ndpKey != null && ndpKey.GetValue("Release") != null)
+                {
+                    Console.WriteLine(".NET Framework Version: " + CheckFor45PlusVersion((int)ndpKey.GetValue("Release")));
+                }
+                else
+                {
+                    Console.WriteLine(".NET Framework Version 4.5 or later is not detected.");
+                }
+            }
+        }
+
+        // Checking the version using >= will enable forward compatibility.
+        private static string CheckFor45PlusVersion(int releaseKey)
+        {
+            if (releaseKey >= 461808)
+                return "4.7.2 or later";
+            if (releaseKey >= 461308)
+                return "4.7.1";
+            if (releaseKey >= 460798)
+                return "4.7";
+            if (releaseKey >= 394802)
+                return "4.6.2";
+            if (releaseKey >= 394254)
+                return "4.6.1";
+            if (releaseKey >= 393295)
+                return "4.6";
+            if (releaseKey >= 379893)
+                return "4.5.2";
+            if (releaseKey >= 378675)
+                return "4.5.1";
+            if (releaseKey >= 378389)
+                return "4.5";
+            // This code should never execute. A non-null release key should mean
+            // that 4.5 or later is installed.
+            return "No 4.5 or later version detected";
+        }
+
         public static void WebTest()
         {
             for (; ; )
@@ -33,7 +127,7 @@ namespace CcharpExercise
                         Credentials = CredentialCache.DefaultCredentials
                     };
                     //从指定网站下载数据
-                    Byte[] pageData = MyWebClient.DownloadData(@"http://cj.choclatl.com/");
+                    Byte[] pageData = MyWebClient.DownloadData(@"http://choclatl.com/");
                     string pageHtml = Encoding.UTF8.GetString(pageData);
 
                     Console.WriteLine(pageHtml);
